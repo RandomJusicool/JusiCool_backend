@@ -1,6 +1,8 @@
 package com.juicycool.backend.global.security.jwt;
 
 import com.juicycool.backend.global.auth.AuthDetailsService;
+import com.juicycool.backend.global.exception.ErrorCode;
+import com.juicycool.backend.global.exception.GlobalException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -45,14 +47,14 @@ public class JwtProvider {
         key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public TokenResponse generateTokenDto(UUID id) {
-        return TokenResponse.builder()
-                .accessToken(generateAccessToken(id))
-                .refreshToken(generateRefreshToken(id))
-                .accessTokenExpiresIn(LocalDateTime.now().plusSeconds(ACCESS_TOKEN_TIME))
-                .refreshTokenExpiresIn(LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME))
-                .build();
-    }
+//    public TokenResponse generateTokenDto(UUID id) {
+//        return TokenResponse.builder()
+//                .accessToken(generateAccessToken(id))
+//                .refreshToken(generateRefreshToken(id))
+//                .accessTokenExpiresIn(LocalDateTime.now().plusSeconds(ACCESS_TOKEN_TIME))
+//                .refreshTokenExpiresIn(LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME))
+//                .build();
+//    }
 
     public Long getExpiration(String accessToken) {
         Claims claims = Jwts.parserBuilder()
@@ -67,19 +69,20 @@ public class JwtProvider {
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-
+            return true;
         } catch (ExpiredJwtException e) {
-            throw new ExpiredTokenException();
+//            throw new ExpiredTokenException();
         } catch (Exception e) {
-            throw new InvalidTokenException();
+//            throw new InvalidTokenException();
         }
+        return false;
     }
 
     public Authentication getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
 
         if (claims.get(AUTHORITIES_KEY) == null) {
-            throw new MindWayException(ErrorCode.INVALID_TOKEN);
+            throw new GlobalException(ErrorCode.INVALID_TOKEN);
         }
 
         UserDetails principal = authDetailsService.loadUserByUsername(claims.getSubject());
