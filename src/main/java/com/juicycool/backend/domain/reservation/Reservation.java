@@ -26,6 +26,9 @@ public class Reservation {
 
     private Integer stock_price; // 예약해놓은 주식 금액
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
