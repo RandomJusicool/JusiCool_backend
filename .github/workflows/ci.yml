@@ -10,15 +10,6 @@ jobs:
   CI:
     runs-on: ubuntu-latest
 
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DB }}
-        ports:
-          - 3306:3306
-          -
     steps:
       - name: Checkout
         uses: actions/checkout@v3
