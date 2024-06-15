@@ -19,6 +19,10 @@ public class Community extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
+    private Long board_number;
+
     private String title;
 
     private String content;
