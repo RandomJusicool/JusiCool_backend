@@ -9,8 +9,12 @@ import lombok.Getter;
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum ErrorCode {
 
+    // token
     EXPIRED_TOKEN(401, "토큰이 만료되었습니다."),
-    INVALID_TOKEN(401, "유효하지 않는 토큰입니다.");
+    INVALID_TOKEN(401, "유효하지 않는 토큰입니다."),
+
+    // auth
+    DUPLICATE_EMAIL(409, "중복되는 이메일입니다.");
 
 
     private final int status;
