@@ -18,6 +18,8 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name; // 주식 이름
+
     private Integer code; // 주식 코드
 
     private Integer market_price; // 시가
