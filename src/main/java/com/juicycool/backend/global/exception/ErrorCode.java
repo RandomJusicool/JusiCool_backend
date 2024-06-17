@@ -17,7 +17,8 @@ public enum ErrorCode {
     DUPLICATE_EMAIL(409, "중복되는 이메일입니다."),
 
     // mail
-    ALREADY_AUTHENTICATED_MAIL(400, "이미 인증된 메일입니다.");
+    ALREADY_AUTHENTICATED_MAIL(400, "이미 인증된 메일입니다."),
+    EXPIRED_AUTH_CODE(401, "이미 만료된 인증코드입니다.");
 
     private final int status;
     private final String message;
