@@ -1,5 +1,6 @@
 package com.juicycool.backend.domain.email;
 
+import com.juicycool.backend.domain.email.presentation.dto.request.VerificationMailRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -17,5 +18,14 @@ public class MailAuthEntity {
     private String randomValue;
     private Boolean authentication;
     private Integer attemptCount;
+
+    public MailAuthEntity updateAuthentication(Boolean authentication) {
+        return MailAuthEntity.builder()
+                .email(email)
+                .randomValue(randomValue)
+                .authentication(authentication)
+                .attemptCount(attemptCount)
+                .build();
+    }
 
 }
