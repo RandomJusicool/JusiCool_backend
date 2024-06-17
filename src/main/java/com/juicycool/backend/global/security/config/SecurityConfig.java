@@ -54,6 +54,7 @@ public class SecurityConfig {
 
                                 // mail
                                 .requestMatchers(HttpMethod.POST, "/api/v1/email").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/email").permitAll()
 
                                 .anyRequest().denyAll()
 
