@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.index.Indexed;
 @RedisHash(value = "refreshToken", timeToLive = 60)
 @Builder
 @Getter
-public class EmailAuthEntity {
+public class MailAuthEntity {
 
     @Id
     private String email;

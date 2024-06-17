@@ -1,6 +1,6 @@
 package com.juicycool.backend.domain.email.service.impl;
 
-import com.juicycool.backend.domain.email.EmailAuthEntity;
+import com.juicycool.backend.domain.email.MailAuthEntity;
 import com.juicycool.backend.domain.email.exception.AlreadyAuthenticatedMailException;
 import com.juicycool.backend.domain.email.presentation.dto.request.SendMailRequestDto;
 import com.juicycool.backend.domain.email.repository.MailAuthRepository;
@@ -22,8 +22,8 @@ public class SendMailServiceImpl implements SendMailService {
     private final MailAuthRepository emailAuthRepository;
 
     public void execute(SendMailRequestDto dto) {
-        EmailAuthEntity emailAuth = emailAuthRepository.findById(dto.getEmail())
-                .orElse(EmailAuthEntity.builder()
+        MailAuthEntity emailAuth = emailAuthRepository.findById(dto.getEmail())
+                .orElse(MailAuthEntity.builder()
                         .email(dto.getEmail())
                         .randomValue(createCode())
                         .authentication(false)
