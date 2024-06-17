@@ -25,8 +25,8 @@ public class MailController {
     }
 
     @GetMapping
-    public ResponseEntity<Void> verificationMail(@RequestParam VerificationMailRequestDto dto) {
-        verificationMailService.execute(dto);
+    public ResponseEntity<Void> verificationMail(@RequestParam String email, @RequestParam String authCode) {
+        verificationMailService.execute(email, authCode);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
