@@ -12,6 +12,8 @@ public enum ErrorCode {
     // token
     EXPIRED_TOKEN(401, "토큰이 만료되었습니다."),
     INVALID_TOKEN(401, "유효하지 않는 토큰입니다."),
+    EXPIRED_REFRESH_TOKEN(401, "만료된 리프레쉬 토큰입니다."),
+    INVALID_REFRESH_TOKEN(401, "변질된 리프레쉬 토큰입니다."),
 
     // auth
     DUPLICATE_EMAIL(409, "중복되는 이메일입니다."),
