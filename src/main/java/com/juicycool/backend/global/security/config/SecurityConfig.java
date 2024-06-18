@@ -52,6 +52,7 @@ public class SecurityConfig {
                                 // auth
                                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/signup").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/signin").permitAll()
+                                .requestMatchers(HttpMethod.PATCH, "/api/v1/auth").permitAll()
 
                                 // mail
                                 .requestMatchers(HttpMethod.POST, "/api/v1/email").permitAll()
