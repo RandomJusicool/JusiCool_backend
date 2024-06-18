@@ -1,5 +1,6 @@
 package com.juicycool.backend.global.security.jwt;
 
+import com.juicycool.backend.domain.auth.presentation.dto.response.TokenResponse;
 import com.juicycool.backend.global.auth.AuthDetailsService;
 import com.juicycool.backend.global.exception.ErrorCode;
 import com.juicycool.backend.global.exception.GlobalException;
@@ -33,8 +34,8 @@ import static com.juicycool.backend.global.security.filter.JwtFilter.BEARER_PREF
 public class JwtProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer ";
-    private static final long ACCESS_TOKEN_TIME = 1000 * 60 * 30L;
-    private static final long REFRESH_TOKEN_TIME = 1000 * 60 * 60 * 24 * 7L;
+    private static final long ACCESS_TOKEN_TIME = 60L * 15 * 4;
+    public static final long REFRESH_TOKEN_TIME = 60L * 60 * 24 * 7;
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -47,14 +48,14 @@ public class JwtProvider {
         key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-//    public TokenResponse generateTokenDto(UUID id) {
-//        return TokenResponse.builder()
-//                .accessToken(generateAccessToken(id))
-//                .refreshToken(generateRefreshToken(id))
-//                .accessTokenExpiresIn(LocalDateTime.now().plusSeconds(ACCESS_TOKEN_TIME))
-//                .refreshTokenExpiresIn(LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME))
-//                .build();
-//    }
+    public TokenResponse generateTokenDto(Long id) {
+        return TokenResponse.builder()
+                .accessToken(generateAccessToken(id))
+                .refreshToken(generateRefreshToken(id))
+                .accessTokenExpiresIn(LocalDateTime.now().plusSeconds(ACCESS_TOKEN_TIME))
+                .refreshTokenExpiresIn(LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME))
+                .build();
+    }
 
     public Long getExpiration(String accessToken) {
         Claims claims = Jwts.parserBuilder()
@@ -113,7 +114,7 @@ public class JwtProvider {
         }
     }
 
-    public String generateAccessToken(UUID id) {
+    public String generateAccessToken(Long id) {
         long now = (new Date()).getTime();
 
         Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_TIME);
@@ -127,7 +128,7 @@ public class JwtProvider {
                 .compact();
     }
 
-    public String generateRefreshToken(UUID id) {
+    public String generateRefreshToken(Long id) {
         long now = (new Date()).getTime();
 
         Date refreshTokenExpiresIn = new Date(now + REFRESH_TOKEN_TIME);
