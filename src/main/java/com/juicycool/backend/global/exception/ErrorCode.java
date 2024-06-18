@@ -18,7 +18,8 @@ public enum ErrorCode {
 
     // mail
     ALREADY_AUTHENTICATED_MAIL(400, "이미 인증된 메일입니다."),
-    EXPIRED_AUTH_CODE(401, "이미 만료된 인증코드입니다.");
+    EXPIRED_AUTH_CODE(401, "이미 만료된 인증코드입니다."),
+    NOT_VERIFICATION_MAIL(401, "인증된 메일이 아닙니다.");
 
     private final int status;
     private final String message;
