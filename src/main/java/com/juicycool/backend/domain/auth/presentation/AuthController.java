@@ -3,6 +3,7 @@ package com.juicycool.backend.domain.auth.presentation;
 import com.juicycool.backend.domain.auth.presentation.dto.request.SignInRequestDto;
 import com.juicycool.backend.domain.auth.presentation.dto.request.SignUpRequestDto;
 import com.juicycool.backend.domain.auth.presentation.dto.response.TokenResponse;
+import com.juicycool.backend.domain.auth.service.LogoutService;
 import com.juicycool.backend.domain.auth.service.ReissueTokenService;
 import com.juicycool.backend.domain.auth.service.SignInService;
 import com.juicycool.backend.domain.auth.service.SignUpService;
@@ -20,6 +21,7 @@ public class AuthController {
     private final SignUpService signUpService;
     private final SignInService signInService;
     private final ReissueTokenService reissueTokenService;
+    private final LogoutService logoutService;
 
     @PostMapping("/signup")
     public ResponseEntity<Void> signUp(@Valid @RequestBody SignUpRequestDto dto) {
@@ -39,5 +41,9 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-
+    @DeleteMapping
+    public ResponseEntity<Void> logout() {
+        logoutService.execute();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
