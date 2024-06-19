@@ -1,9 +1,6 @@
 package com.juicycool.backend.domain.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,5 +24,8 @@ public class User {
     private String password;
 
     private Integer points;
+
+    @Enumerated(EnumType.STRING)
+    private Authority authority;
 
 }

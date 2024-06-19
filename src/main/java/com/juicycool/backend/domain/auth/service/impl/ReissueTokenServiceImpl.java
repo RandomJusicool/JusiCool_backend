@@ -28,18 +28,18 @@ public class ReissueTokenServiceImpl implements ReissueTokenService {
         if (!Objects.equals(existedRefreshToken.getToken(), parseToken))
             throw new InvalidRefreshTokenException();
 
-        TokenResponse tokenResponse = jwtProvider.generateTokenDto(existedRefreshToken.getUserId());
+        TokenResponse tokenResponse = jwtProvider.generateTokenDto(existedRefreshToken.getEmail());
 
-        saveRefreshToken(tokenResponse.getRefreshToken(), existedRefreshToken.getUserId());
+        saveRefreshToken(tokenResponse.getRefreshToken(), existedRefreshToken.getEmail());
 
         return tokenResponse;
     }
 
-    private void saveRefreshToken(String refreshToken, Long userId) {
-        refreshTokenRepository.deleteById(userId);
+    private void saveRefreshToken(String refreshToken, String email) {
+        refreshTokenRepository.deleteById(email);
 
         RefreshToken token = RefreshToken.builder()
-                .userId(userId)
+                .email(email)
                 .token(refreshToken)
                 .build();
 
