@@ -30,7 +30,7 @@ public class SignInServiceImpl implements SignInService {
         if (passwordEncoder.matches(user.getPassword(), dto.getPassword()))
             throw new NotMatchPasswordException();
 
-        TokenResponse tokenResponse = jwtProvider.generateTokenDto(user.getId());
+        TokenResponse tokenResponse = jwtProvider.generateTokenDto(user.getEmail());
 
         saveRefreshToken(user, tokenResponse.getRefreshToken());
 
@@ -39,7 +39,7 @@ public class SignInServiceImpl implements SignInService {
 
     private void saveRefreshToken(User user, String token) {
         RefreshToken refreshToken = RefreshToken.builder()
-                .userId(user.getId())
+                .email(user.getEmail())
                 .token(token)
                 .build();
 
