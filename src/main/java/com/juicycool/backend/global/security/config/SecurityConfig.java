@@ -1,6 +1,6 @@
 package com.juicycool.backend.global.security.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.juicycool.backend.global.security.filter.JwtFilter;
 import com.juicycool.backend.global.security.handler.JwtAccessDeniedHandler;
 import com.juicycool.backend.global.security.handler.JwtAuthenticationEntryPoint;
 import com.juicycool.backend.global.security.jwt.JwtProvider;
@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsUtils;
 
 @Configuration
@@ -53,6 +54,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/signup").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/signin").permitAll()
                                 .requestMatchers(HttpMethod.PATCH, "/api/v1/auth").permitAll()
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/auth").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/auth/health").authenticated()
 
                                 // mail
                                 .requestMatchers(HttpMethod.POST, "/api/v1/email").permitAll()
@@ -63,7 +66,9 @@ public class SecurityConfig {
 
 
 
-                );
+                )
+
+                .addFilterBefore(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
 
 
         return http.build();
