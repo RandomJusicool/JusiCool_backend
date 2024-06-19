@@ -1,5 +1,6 @@
 package com.juicycool.backend.global.auth;
 
+import com.juicycool.backend.domain.user.exception.NotFoundUserException;
 import com.juicycool.backend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,12 +15,8 @@ public class AuthDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        try {
-            return userRepository.findByEmail(email)
-                    .map(AuthDetails::new)
-                    .orElseThrow(Exception::new);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return userRepository.findByEmail(email)
+                .map(AuthDetails::new)
+                .orElseThrow(NotFoundUserException::new);
     }
 }
