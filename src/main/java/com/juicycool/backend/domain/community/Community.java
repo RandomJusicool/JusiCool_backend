@@ -21,16 +21,6 @@ public class Community extends BaseEntity {
 
     private String name;
 
-    private Long board_number;
-
-    private String title;
-
-    private String content;
-
-    private Long thumbs;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private Integer board_num;
 
 }

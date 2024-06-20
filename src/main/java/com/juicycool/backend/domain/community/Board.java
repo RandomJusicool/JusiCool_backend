@@ -1,40 +1,37 @@
-package com.juicycool.backend.domain.reservation;
+package com.juicycool.backend.domain.community;
 
-
-import com.juicycool.backend.domain.stock.Stock;
 import com.juicycool.backend.domain.user.User;
+import com.juicycool.backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Entity
 @Getter
 @Builder
-public class Reservation {
+public class Board extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer stock_code; // 주식 코드
+    private String title;
 
-    private Integer reservation_price; // 예약한 금액
+    private String content;
 
-    private Integer stock_price; // 예약해놓은 주식 금액
-
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private Integer comment_num;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stock_id")
-    private Stock stock;
+    @JoinColumn(name = "community_id")
+    private Community community;
+
 
 }
