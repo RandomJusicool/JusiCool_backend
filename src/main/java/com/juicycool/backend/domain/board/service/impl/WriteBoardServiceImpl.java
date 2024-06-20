@@ -36,6 +36,7 @@ public class WriteBoardServiceImpl implements WriteBoardService {
                 .user(user)
                 .community(community)
                 .comment_num(0)
+                .likes(0)
                 .build();
 
         boardRepository.save(board);
