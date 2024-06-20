@@ -63,6 +63,7 @@ public class SecurityConfig {
 
                                 // board
                                 .requestMatchers(HttpMethod.POST, "/api/v1/board/{community_id}").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/board/{board_id}").authenticated()
 
                                 .anyRequest().denyAll()
 
