@@ -26,6 +26,9 @@ public enum ErrorCode {
     // community
     NOT_FOUND_COMMUNITY(404, "존재하지 않는 커뮤니티입니다."),
 
+    // board
+    NOT_FOUND_BOARD(404, "해당 게시판을 찾을 수 없습니다."),
+
     // user
     NOT_FOUND_USER(404, "해당 유저를 찾을 수 없습니다."),
     NOT_MATCH_PASSWORD(400, "비밀번호가 일치하지 않습니다.");
