@@ -6,6 +6,7 @@ import jakarta.persistence.PrePersist;
 import lombok.Getter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -15,10 +16,10 @@ import java.time.ZonedDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
 
-    private LocalDateTime createAt;
+    private LocalDate createAt;
 
     @PrePersist
     protected void onCreate() {
-        createAt = ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDateTime();
+        createAt = LocalDate.from(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDateTime());
     }
 }
