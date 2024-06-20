@@ -26,6 +26,8 @@ public class Board extends BaseEntity {
 
     private Integer comment_num;
 
+    private Integer likes;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
