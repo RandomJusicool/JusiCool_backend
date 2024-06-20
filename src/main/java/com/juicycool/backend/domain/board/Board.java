@@ -1,5 +1,6 @@
-package com.juicycool.backend.domain.community;
+package com.juicycool.backend.domain.board;
 
+import com.juicycool.backend.domain.community.Community;
 import com.juicycool.backend.domain.user.User;
 import com.juicycool.backend.global.entity.BaseEntity;
 import jakarta.persistence.*;

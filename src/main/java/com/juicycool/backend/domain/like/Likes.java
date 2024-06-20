@@ -1,6 +1,6 @@
-package com.juicycool.backend.domain.community;
+package com.juicycool.backend.domain.like;
 
-import com.juicycool.backend.domain.user.User;
+import com.juicycool.backend.domain.board.Board;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
