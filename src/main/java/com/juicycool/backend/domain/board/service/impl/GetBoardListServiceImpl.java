@@ -28,7 +28,7 @@ public class GetBoardListServiceImpl implements GetBoardListService {
                         .id(board.getId())
                         .title(board.getTitle())
                         .content(board.getContent())
-                        .created_at(String.valueOf(board.getCreateAt()))
+                        .created_at(String.valueOf(board.getCreated_at()))
                         .likes(board.getLikes())
                         .comment_num(board.getComment_num())
                         .build())
