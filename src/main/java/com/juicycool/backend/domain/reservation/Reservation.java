@@ -24,7 +24,7 @@ public class Reservation {
 
     private Integer reservation_price; // 예약한 금액
 
-    private Integer reservation_num; // 예약한 주식 갯수
+    private Integer stock_num; // 예약한 주식 갯수
 
     private Integer stock_price; // 예약해놓은 주식 금액
 
