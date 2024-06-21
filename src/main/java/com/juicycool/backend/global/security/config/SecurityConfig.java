@@ -68,6 +68,9 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.PATCH, "/api/v1/board/{board_id}").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/api/v1/board/{board_id}").authenticated()
 
+                                // reservation
+                                .requestMatchers(HttpMethod.GET, "/api/v1/reservation").authenticated()
+
                                 .anyRequest().denyAll()
 
 
