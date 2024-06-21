@@ -1,7 +1,6 @@
 package com.juicycool.backend.domain.reservation;
 
 
-import com.juicycool.backend.domain.stock.Stock;
 import com.juicycool.backend.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,6 +19,8 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String stock_name;
+
     private Integer stock_code; // 주식 코드
 
     private Integer reservation_price; // 예약한 금액
@@ -34,9 +35,5 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stock_id")
-    private Stock stock;
 
 }
