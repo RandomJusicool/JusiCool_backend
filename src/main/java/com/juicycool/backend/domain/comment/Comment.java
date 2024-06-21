@@ -1,5 +1,6 @@
 package com.juicycool.backend.domain.comment;
 
+import com.juicycool.backend.domain.board.Board;
 import com.juicycool.backend.domain.community.Community;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class Comment {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "community_id")
-    private Community community;
+    @JoinColumn(name = "board_id")
+    private Board board;
 
 }
