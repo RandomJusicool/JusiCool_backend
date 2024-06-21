@@ -2,7 +2,6 @@ package com.juicycool.backend.domain.board;
 
 import com.juicycool.backend.domain.community.Community;
 import com.juicycool.backend.domain.user.User;
-import com.juicycool.backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @Builder
-public class Board extends BaseEntity {
+public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +24,8 @@ public class Board extends BaseEntity {
     private String content;
 
     private Integer comment_num;
+
+    private String created_at;
 
     private Integer likes;
 

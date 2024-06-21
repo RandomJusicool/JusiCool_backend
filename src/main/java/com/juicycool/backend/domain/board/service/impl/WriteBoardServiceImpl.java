@@ -11,9 +11,13 @@ import com.juicycool.backend.domain.user.User;
 import com.juicycool.backend.domain.user.util.UserUtil;
 import com.juicycool.backend.global.annotation.TransactionService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import java.time.LocalDate;
 
 @TransactionService
 @RequiredArgsConstructor
+@Slf4j
 public class WriteBoardServiceImpl implements WriteBoardService {
 
     private final BoardRepository boardRepository;
@@ -35,6 +39,7 @@ public class WriteBoardServiceImpl implements WriteBoardService {
                 .content(dto.getContent())
                 .user(user)
                 .community(community)
+                .created_at(String.valueOf(LocalDate.now()))
                 .comment_num(0)
                 .likes(0)
                 .build();
