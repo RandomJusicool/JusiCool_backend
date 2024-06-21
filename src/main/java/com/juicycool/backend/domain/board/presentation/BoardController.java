@@ -4,10 +4,7 @@ import com.juicycool.backend.domain.board.presentation.dto.request.UpdateBoardRe
 import com.juicycool.backend.domain.board.presentation.dto.request.WriteBoardRequestDto;
 import com.juicycool.backend.domain.board.presentation.dto.response.GetBoardInfoResponseDto;
 import com.juicycool.backend.domain.board.presentation.dto.response.GetBoardListResponseDto;
-import com.juicycool.backend.domain.board.service.GetBoardInfoService;
-import com.juicycool.backend.domain.board.service.GetBoardListService;
-import com.juicycool.backend.domain.board.service.UpdateBoardService;
-import com.juicycool.backend.domain.board.service.WriteBoardService;
+import com.juicycool.backend.domain.board.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +21,7 @@ public class BoardController {
     private final GetBoardInfoService getBoardInfoService;
     private final GetBoardListService getBoardListService;
     private final UpdateBoardService updateBoardService;
+    private final DeleteBoardService deleteBoardService;
 
     @PostMapping("/{community_id}")
     public ResponseEntity<Void> writeBoard(
@@ -52,6 +50,12 @@ public class BoardController {
         @RequestBody UpdateBoardRequestDto dto
     ) {
         updateBoardService.execute(boardId, dto);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{board_id}")
+    public ResponseEntity<Void> deleteBoard(@PathVariable("board_id") Long boardId) {
+        deleteBoardService.execute(boardId);
         return ResponseEntity.noContent().build();
     }
 }
