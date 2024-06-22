@@ -71,6 +71,9 @@ public class SecurityConfig {
                                 // reservation
                                 .requestMatchers(HttpMethod.GET, "/api/v1/reservation").authenticated()
 
+                                // community
+                                .requestMatchers(HttpMethod.GET, "/api/v1/community").authenticated()
+
                                 .anyRequest().denyAll()
 
 
