@@ -41,4 +41,5 @@ public class Board {
         this.commentNum++;
     }
     public void addLikes(){this.likes++;}
+    public void cancelLike(){this.likes--;}
 }
