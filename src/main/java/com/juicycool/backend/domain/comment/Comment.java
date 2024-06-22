@@ -1,7 +1,6 @@
 package com.juicycool.backend.domain.comment;
 
-import com.juicycool.backend.domain.board.Board;
-import com.juicycool.backend.domain.community.Community;
+import com.juicycool.backend.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,10 +19,12 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long boardId;
+
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
-    private Board board;
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

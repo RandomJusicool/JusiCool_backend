@@ -37,5 +37,7 @@ public class Board {
     @JoinColumn(name = "community_id")
     private Community community;
 
-
+    public void addCommentNum() {
+        this.comment_num++;
+    }
 }

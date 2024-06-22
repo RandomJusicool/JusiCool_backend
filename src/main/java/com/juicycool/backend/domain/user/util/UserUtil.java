@@ -10,14 +10,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class UserUtil {
 
     private final UserRepository userRepository;
 
     public User getCurrentUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        log.info(email);
         return userRepository.findByEmail(email)
                 .orElseThrow(NotFoundUserException::new);
     }

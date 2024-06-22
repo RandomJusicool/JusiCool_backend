@@ -5,5 +5,5 @@ import com.juicycool.backend.domain.comment.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    void deleteByBoard(Board board);
+    void deleteByBoardId(Long boardId);
 }
