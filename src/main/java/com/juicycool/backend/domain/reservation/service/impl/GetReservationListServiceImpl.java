@@ -23,8 +23,8 @@ public class GetReservationListServiceImpl implements GetReservationListService 
 
         return reservationRepository.findByUser(user).stream()
                 .map(reservation -> GetReservationListResponseDto.builder()
-                        .stock_name(reservation.getStock_name())
-                        .stock_num(reservation.getStock_num())
+                        .stock_name(reservation.getStockName())
+                        .stock_num(reservation.getStockNum())
                         .status(reservation.getStatus())
                         .build())
                 .collect(Collectors.toList());

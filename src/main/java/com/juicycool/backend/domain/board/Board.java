@@ -23,9 +23,9 @@ public class Board {
 
     private String content;
 
-    private Integer comment_num;
+    private Integer commentNum;
 
-    private String created_at;
+    private String createdAt;
 
     private Integer likes;
 
@@ -38,6 +38,6 @@ public class Board {
     private Community community;
 
     public void addCommentNum() {
-        this.comment_num++;
+        this.commentNum++;
     }
 }

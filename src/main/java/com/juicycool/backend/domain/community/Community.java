@@ -21,6 +21,6 @@ public class Community {
 
     private String name;
 
-    private Integer board_num;
+    private Integer boardNum;
 
 }

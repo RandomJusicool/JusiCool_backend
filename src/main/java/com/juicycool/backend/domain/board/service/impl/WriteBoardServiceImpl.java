@@ -39,8 +39,8 @@ public class WriteBoardServiceImpl implements WriteBoardService {
                 .content(dto.getContent())
                 .user(user)
                 .community(community)
-                .created_at(String.valueOf(LocalDate.now()))
-                .comment_num(0)
+                .createdAt(String.valueOf(LocalDate.now()))
+                .commentNum(0)
                 .likes(0)
                 .build();
 

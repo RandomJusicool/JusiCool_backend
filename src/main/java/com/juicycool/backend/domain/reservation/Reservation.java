@@ -19,15 +19,15 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String stock_name;
+    private String stockName;
 
-    private Integer stock_code; // 주식 코드
+    private Integer stockCode; // 주식 코드
 
-    private Integer reservation_price; // 예약한 금액
+    private Integer reservationPrice; // 예약한 금액
 
-    private Integer stock_num; // 예약한 주식 갯수
+    private Integer stockNum; // 예약한 주식 갯수
 
-    private Integer stock_price; // 예약해놓은 주식 금액
+    private Integer stockPrice; // 예약해놓은 주식 금액
 
     @Enumerated(EnumType.STRING)
     private Status status;

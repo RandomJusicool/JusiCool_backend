@@ -19,7 +19,7 @@ public class GetCommunityServiceImpl implements GetCommunityService {
         return communityRepository.findAll().stream()
                 .map(community -> GetCommunityListResponseDto.builder()
                         .name(community.getName())
-                        .board_num(community.getBoard_num())
+                        .board_num(community.getBoardNum())
                         .build())
                 .collect(Collectors.toList());
     }
