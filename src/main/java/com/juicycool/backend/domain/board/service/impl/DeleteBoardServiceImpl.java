@@ -31,7 +31,7 @@ public class DeleteBoardServiceImpl implements DeleteBoardService {
             throw new NotMatchUserException();
 
 
-        commentRepository.deleteByBoard(findBoard);
+        commentRepository.deleteByBoardId(boardId);
         likeRepository.deleteByBoard(findBoard);
         boardRepository.delete(findBoard);
 
