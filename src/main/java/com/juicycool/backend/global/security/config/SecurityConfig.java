@@ -78,6 +78,9 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/api/v1/comment/{board_id}").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/comment/{board_id}").authenticated()
 
+                                // like
+                                .requestMatchers(HttpMethod.POST, "/api/v1/like/{board_id}").authenticated()
+
                                 .anyRequest().denyAll()
 
 
