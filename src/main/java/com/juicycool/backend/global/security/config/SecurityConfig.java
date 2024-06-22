@@ -80,6 +80,7 @@ public class SecurityConfig {
 
                                 // like
                                 .requestMatchers(HttpMethod.POST, "/api/v1/like/{board_id}").authenticated()
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/like/{board_id}").authenticated()
 
                                 .anyRequest().denyAll()
 
