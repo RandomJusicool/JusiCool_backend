@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Builder
-public class Community extends BaseEntity {
+public class Community {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
