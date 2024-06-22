@@ -74,6 +74,9 @@ public class SecurityConfig {
                                 // community
                                 .requestMatchers(HttpMethod.GET, "/api/v1/community").authenticated()
 
+                                // comment
+                                .requestMatchers(HttpMethod.POST, "/api/v1/comment/{board_id}").authenticated()
+
                                 .anyRequest().denyAll()
 
 
