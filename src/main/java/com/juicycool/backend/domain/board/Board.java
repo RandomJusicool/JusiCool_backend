@@ -40,4 +40,5 @@ public class Board {
     public void addCommentNum() {
         this.commentNum++;
     }
+    public void addLikes(){this.likes++;}
 }
