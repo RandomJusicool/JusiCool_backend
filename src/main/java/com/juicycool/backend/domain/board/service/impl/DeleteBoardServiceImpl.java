@@ -32,7 +32,7 @@ public class DeleteBoardServiceImpl implements DeleteBoardService {
 
 
         commentRepository.deleteByBoardId(boardId);
-        likeRepository.deleteByBoard(findBoard);
+        likeRepository.deleteByBoardId(boardId);
         boardRepository.delete(findBoard);
 
     }
