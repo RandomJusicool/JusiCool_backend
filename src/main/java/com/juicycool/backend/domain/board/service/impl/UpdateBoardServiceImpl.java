@@ -36,10 +36,10 @@ public class UpdateBoardServiceImpl implements UpdateBoardService {
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .likes(board.getLikes())
-                .comment_num(board.getComment_num())
+                .commentNum(board.getCommentNum())
                 .community(board.getCommunity())
                 .user(board.getUser())
-                .created_at(board.getCreated_at())
+                .createdAt(board.getCreatedAt())
                 .build();
 
         boardRepository.save(updateBoard);
