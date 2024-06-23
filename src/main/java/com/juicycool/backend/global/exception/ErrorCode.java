@@ -18,6 +18,10 @@ public enum ErrorCode {
     // auth
     DUPLICATE_EMAIL(409, "중복되는 이메일입니다."),
 
+    // stock
+    NOT_FOUND_STOCK(404, "해당 주식을 찾을 수 없습니다"),
+    POINT_LOWER_THAN_PRESENT_PRICE(400, "매수 가격보다 포인트가 더 적습니다"),
+
     // mail
     ALREADY_AUTHENTICATED_MAIL(400, "이미 인증된 메일입니다."),
     EXPIRED_AUTH_CODE(401, "이미 만료된 인증코드입니다."),
