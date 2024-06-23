@@ -23,9 +23,12 @@ public class User {
 
     private String password;
 
-    private Integer points;
+    private Long points;
 
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
+    public void deductPoints(Long stockPoint) {
+        this.points -= stockPoint;
+    }
 }
