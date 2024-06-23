@@ -61,6 +61,9 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/api/v1/email").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/email").permitAll()
 
+                                // stock
+                                .requestMatchers(HttpMethod.POST, "/api/v1/stock/{stock_id}").authenticated()
+
                                 // board
                                 .requestMatchers(HttpMethod.POST, "/api/v1/board/{community_id}").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/board/{board_id}").authenticated()
