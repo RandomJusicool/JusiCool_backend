@@ -28,7 +28,7 @@ public class Stock {
 
     private Integer lowPrice; // 저가
 
-    private Integer presentPrice; // 현재가
+    private Long presentPrice; // 현재가
 
     private Integer contractPrice; // 체결가
 

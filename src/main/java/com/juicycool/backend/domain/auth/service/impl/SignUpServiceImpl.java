@@ -36,7 +36,7 @@ public class SignUpServiceImpl implements SignUpService {
                 .email(dto.getEmail())
                 .name(dto.getName())
                 .password(passwordEncoder.encode(dto.getPassword()))
-                .points(100000)
+                .points(100000L)
                 .build();
 
         mailAuthRepository.delete(mailAuth);
