@@ -28,4 +28,8 @@ public class OwnedStocks {
     @JoinColumn(name = "stock_id")
     private Stock stock;
 
+    public void discountStockNumber(Long num) {
+        stockNumber -= num;
+    }
+
 }
