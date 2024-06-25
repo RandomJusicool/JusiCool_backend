@@ -31,4 +31,5 @@ public class User {
     public void deductPoints(Long stockPoint) {
         this.points -= stockPoint;
     }
+    public void addSellPoints(Long sellPoint) {this.points += sellPoint;}
 }
