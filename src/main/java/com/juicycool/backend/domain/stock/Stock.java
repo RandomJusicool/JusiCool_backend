@@ -24,7 +24,7 @@ public class Stock {
 
     private Long marketPrice; // 시가
 
-    private Long headPrice;
+    private Long headPrice; // 종가
 
     private Long highPrice; // 고가
 
