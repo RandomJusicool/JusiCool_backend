@@ -64,6 +64,7 @@ public class SecurityConfig {
                                 // stock
                                 .requestMatchers(HttpMethod.POST, "/api/v1/stock/{stock_id}").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/api/v1/stock/{stock_id}").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/stock").authenticated()
 
                                 // board
                                 .requestMatchers(HttpMethod.POST, "/api/v1/board/{community_id}").authenticated()
