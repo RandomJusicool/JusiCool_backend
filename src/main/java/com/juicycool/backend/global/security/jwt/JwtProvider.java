@@ -1,28 +1,29 @@
 package com.juicycool.backend.global.security.jwt;
 
+import com.juicycool.backend.domain.auth.presentation.dto.response.TokenResponse;
 import com.juicycool.backend.global.auth.AuthDetailsService;
 import com.juicycool.backend.global.exception.ErrorCode;
 import com.juicycool.backend.global.exception.GlobalException;
+import com.juicycool.backend.global.security.exception.ExpiredTokenException;
+import com.juicycool.backend.global.security.exception.InvalidTokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.UUID;
 
 import static com.juicycool.backend.global.security.filter.JwtFilter.AUTHORIZATION_HEADER;
 import static com.juicycool.backend.global.security.filter.JwtFilter.BEARER_PREFIX;
@@ -33,49 +34,34 @@ import static com.juicycool.backend.global.security.filter.JwtFilter.BEARER_PREF
 public class JwtProvider {
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "Bearer ";
-    private static final long ACCESS_TOKEN_TIME = 1000 * 60 * 30L;
-    private static final long REFRESH_TOKEN_TIME = 1000 * 60 * 60 * 24 * 7L;
+    private static final long ACCESS_TOKEN_TIME = 60L * 15 * 4;
+    public static final long REFRESH_TOKEN_TIME = 60L * 60 * 24 * 7;
 
-    @Value("${jwt.secret}")
-    private String secretKey;
-    private static Key key;
     private final AuthDetailsService authDetailsService;
+    private final JwtProperties jwtProperties;
 
-    @PostConstruct
-    public void init(){
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        key = Keys.hmacShaKeyFor(keyBytes);
+    private Key getSignInKey() {
+        return Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes(StandardCharsets.UTF_8));
     }
 
-//    public TokenResponse generateTokenDto(UUID id) {
-//        return TokenResponse.builder()
-//                .accessToken(generateAccessToken(id))
-//                .refreshToken(generateRefreshToken(id))
-//                .accessTokenExpiresIn(LocalDateTime.now().plusSeconds(ACCESS_TOKEN_TIME))
-//                .refreshTokenExpiresIn(LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME))
-//                .build();
-//    }
-
-    public Long getExpiration(String accessToken) {
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(accessToken)
-                .getBody();
-
-        return claims.getExpiration().getTime();
+    public TokenResponse generateTokenDto(String email) {
+        return TokenResponse.builder()
+                .accessToken(generateAccessToken(email))
+                .refreshToken(generateRefreshToken(email))
+                .accessTokenExpiresIn(LocalDateTime.now().plusSeconds(ACCESS_TOKEN_TIME))
+                .refreshTokenExpiresIn(LocalDateTime.now().plusSeconds(REFRESH_TOKEN_TIME))
+                .build();
     }
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(token);
             return true;
         } catch (ExpiredJwtException e) {
-//            throw new ExpiredTokenException();
+            throw new ExpiredTokenException();
         } catch (Exception e) {
-//            throw new InvalidTokenException();
+            throw new InvalidTokenException();
         }
-        return false;
     }
 
     public Authentication getAuthentication(String accessToken) {
@@ -84,14 +70,13 @@ public class JwtProvider {
         if (claims.get(AUTHORITIES_KEY) == null) {
             throw new GlobalException(ErrorCode.INVALID_TOKEN);
         }
-
         UserDetails principal = authDetailsService.loadUserByUsername(claims.getSubject());
         return new UsernamePasswordAuthenticationToken(principal, "", principal.getAuthorities());
     }
 
     private Claims parseClaims(String accessToken) {
         try {
-            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
+            return Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(accessToken).getBody();
         } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
@@ -113,29 +98,25 @@ public class JwtProvider {
         }
     }
 
-    public String generateAccessToken(UUID id) {
-        long now = (new Date()).getTime();
-
-        Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_TIME);
+    public String generateAccessToken(String email) {
+        Date accessTokenExpiresIn = new Date(System.currentTimeMillis() + ACCESS_TOKEN_TIME*1000);
 
         return Jwts.builder()
-                .setSubject(id.toString())
+                .setSubject(email)
                 .claim(AUTHORITIES_KEY, "JWT")
                 .setIssuedAt(new Date())
                 .setExpiration(accessTokenExpiresIn)
-                .signWith(key, SignatureAlgorithm.HS256)
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public String generateRefreshToken(UUID id) {
-        long now = (new Date()).getTime();
-
-        Date refreshTokenExpiresIn = new Date(now + REFRESH_TOKEN_TIME);
+    public String generateRefreshToken(String email) {
+        Date refreshTokenExpiresIn = new Date(System.currentTimeMillis() + REFRESH_TOKEN_TIME*1000);
 
         return Jwts.builder()
-                .setSubject(id.toString())
+                .setSubject(email)
                 .setExpiration(refreshTokenExpiresIn)
-                .signWith(key, SignatureAlgorithm.HS256)
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 }

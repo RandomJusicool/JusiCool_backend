@@ -1,7 +1,6 @@
 package com.juicycool.backend.domain.reservation;
 
 
-import com.juicycool.backend.domain.stock.Stock;
 import com.juicycool.backend.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,21 +19,21 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer stock_code; // 주식 코드
+    private String stockName;
 
-    private Integer reservation_price; // 예약한 금액
+    private Integer stockCode; // 주식 코드
 
-    private Integer stock_price; // 예약해놓은 주식 금액
+    private Integer reservationPrice; // 예약한 금액
+
+    private Integer stockNum; // 예약한 주식 갯수
+
+    private Integer stockPrice; // 예약해놓은 주식 금액
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "stock_id")
-    private Stock stock;
 
 }

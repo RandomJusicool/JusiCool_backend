@@ -1,6 +1,6 @@
-package com.juicycool.backend.domain.community;
+package com.juicycool.backend.domain.like;
 
-import com.juicycool.backend.domain.user.User;
+import com.juicycool.backend.domain.board.Board;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,18 +12,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Builder
-public class ThumbsUp {
+public class Likes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private Long userId;
 
-    @ManyToOne
-    @JoinColumn(name = "community_id")
-    private Community community;
-
+    private Long boardId;
 }

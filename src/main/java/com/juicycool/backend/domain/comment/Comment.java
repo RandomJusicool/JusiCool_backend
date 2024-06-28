@@ -1,15 +1,12 @@
 package com.juicycool.backend.domain.comment;
 
-import com.juicycool.backend.domain.community.Community;
 import com.juicycool.backend.domain.user.User;
-import com.juicycool.backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -22,10 +19,12 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long boardId;
+
     private String content;
 
-    @ManyToOne
-    @JoinColumn(name = "community_id")
-    private Community community;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }
