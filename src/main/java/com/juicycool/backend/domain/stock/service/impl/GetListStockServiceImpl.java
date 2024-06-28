@@ -20,7 +20,7 @@ public class GetListStockServiceImpl implements GetListStockService {
                 .map(stock -> GetListStockResponseDto.builder()
                         .name(stock.getName())
                         .presentPrice(stock.getPresentPrice())
-                        .upDownPercent(((stock.getHeadPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100L)
+                        .upDownPercent(((stock.getHeadPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100)
                         .upDownPrice(stock.getHeadPrice() - stock.getMarketPrice())
                         .build())
                 .collect(Collectors.toList());
