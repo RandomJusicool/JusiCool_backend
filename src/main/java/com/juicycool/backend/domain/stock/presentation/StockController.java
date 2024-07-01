@@ -5,6 +5,7 @@ import com.juicycool.backend.domain.stock.presentation.dto.request.SellStockRequ
 import com.juicycool.backend.domain.stock.presentation.dto.response.GetListStockResponseDto;
 import com.juicycool.backend.domain.stock.service.BuyStockService;
 import com.juicycool.backend.domain.stock.service.GetListStockService;
+import com.juicycool.backend.domain.stock.service.SellReservationStockService;
 import com.juicycool.backend.domain.stock.service.SellStockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ public class StockController {
     private final BuyStockService buyStockService;
     private final SellStockService sellStockService;
     private final GetListStockService getListStockService;
+    private final SellReservationStockService sellReservationStockService;
 
     @PostMapping("/{stock_id}")
     public ResponseEntity<Void> buyStock(
@@ -44,6 +46,15 @@ public class StockController {
     public ResponseEntity<List<GetListStockResponseDto>> getListStock() {
         List<GetListStockResponseDto> response = getListStockService.execute();
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/sell/{stock_id}")
+    public ResponseEntity<Void> sellReservationStock(
+        @PathVariable("stock_id") Long stockId,
+        @RequestBody SellStockRequestDto dto
+    ) {
+        sellReservationStockService.execute(stockId, dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }

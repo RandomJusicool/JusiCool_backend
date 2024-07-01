@@ -18,7 +18,7 @@ public class OwnedStocks {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long stockNumber; // 매수한 갯수
+    private Long stockNumber; // 보유 중인 갯수
 
     @ManyToOne
     @JoinColumn(name = "user_id")
