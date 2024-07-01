@@ -23,11 +23,9 @@ public class Reservation {
 
     private Integer stockCode; // 주식 코드
 
-    private Integer reservationPrice; // 예약한 금액
+    private Long reservationPrice; // 예약한 금액
 
-    private Integer stockNum; // 예약한 주식 갯수
-
-    private Integer stockPrice; // 예약해놓은 주식 금액
+    private Long stockNum; // 예약한 주식 갯수
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -35,5 +33,9 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public void plusStockNum(Long num) {
+        this.stockNum += num;
+    }
 
 }
