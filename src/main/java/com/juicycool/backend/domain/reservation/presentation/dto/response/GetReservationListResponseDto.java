@@ -8,6 +8,6 @@ import lombok.Getter;
 @Builder
 public class GetReservationListResponseDto {
     private String stock_name;
-    private Integer stock_num;
+    private Long stock_num;
     private Status status;
 }
