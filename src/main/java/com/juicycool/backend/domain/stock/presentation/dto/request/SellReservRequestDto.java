@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SellStockRequestDto {
+public class SellReservRequestDto {
     private Long num;
+    private Long goal_price;
 }
