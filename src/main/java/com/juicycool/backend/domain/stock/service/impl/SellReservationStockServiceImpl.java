@@ -5,12 +5,11 @@ import com.juicycool.backend.domain.reservation.Status;
 import com.juicycool.backend.domain.reservation.repository.ReservationRepository;
 import com.juicycool.backend.domain.stock.OwnedStocks;
 import com.juicycool.backend.domain.stock.Stock;
+import com.juicycool.backend.domain.stock.exception.InvalidSellingNumberException;
 import com.juicycool.backend.domain.stock.exception.NotFoundOwnedStockException;
-import com.juicycool.backend.domain.stock.exception.NotFoundReservationException;
 import com.juicycool.backend.domain.stock.exception.NotFoundStockException;
 import com.juicycool.backend.domain.stock.exception.PointLowerThanPresentPriceException;
 import com.juicycool.backend.domain.stock.presentation.dto.request.SellReservRequestDto;
-import com.juicycool.backend.domain.stock.presentation.dto.request.SellStockRequestDto;
 import com.juicycool.backend.domain.stock.repository.OwnedStocksRepository;
 import com.juicycool.backend.domain.stock.repository.StockRepository;
 import com.juicycool.backend.domain.stock.service.SellReservationStockService;
@@ -44,22 +43,23 @@ public class SellReservationStockServiceImpl implements SellReservationStockServ
     }
 
     private void saveReservation(Stock stock, SellReservRequestDto dto, User user) {
-        if (reservationRepository.existsByUserAndStockCode(user, stock.getCode())) {
-//            Reservation reservation = reservationRepository.findByUserAndStockCode(user, stock.getCode())
-//                    .orElseThrow(NotFoundReservationException::new);
-//
-//            reservation.plusStockNum(dto.getNum());
-        } else {
-            Reservation reservation = Reservation.builder()
-                    .stockCode(stock.getCode())
-                    .stockName(stock.getName())
-                    .stockNum(dto.getNum())
-                    .reservationPrice(dto.getGoal_price())
-                    .status(Status.SELL)
-                    .user(user)
-                    .build();
+        Reservation reservation = reservationRepository.findByUserAndStockCodeAndStatus(user, stock.getCode(), Status.SELL)
+                .orElse(Reservation.builder()
+                        .stock(stock)
+                        .reservationPrice(dto.getGoal_price())
+                        .status(Status.SELL)
+                        .user(user)
+                        .stockNum(0L)
+                        .build());
 
-            reservationRepository.save(reservation);
-        }
+        OwnedStocks ownedStocks = ownedStocksRepository.findByUserAndStock(user, stock)
+                .orElseThrow(NotFoundOwnedStockException::new);
+
+        reservation.plusStockNum(dto.getNum());
+
+        if (ownedStocks.getStockNumber() < reservation.getStockNum() + dto.getNum())
+            throw new InvalidSellingNumberException();
+
+        reservationRepository.save(reservation);
     }
 }
