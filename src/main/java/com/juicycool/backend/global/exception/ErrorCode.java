@@ -22,7 +22,8 @@ public enum ErrorCode {
     NOT_FOUND_STOCK(404, "해당 주식을 찾을 수 없습니다"),
     POINT_LOWER_THAN_PRESENT_PRICE(400, "현재가가 보유중인 포인트보다 높습니다"),
     NOT_FOUND_OWNED_STOCK(404, "해당 보유 중인 주식을 찾을 수 없습니다."),
-    INVALID_SELLING_NUMBER(400, "올바르지 않은 매도 갯수입니다."),
+    INVALID_SELLING_NUMBER(400, "올바르지 않은 매도 주문입니다."),
+    INVALID_BUYING_NUMBER(400, "올바르지 않은 매수 주문입니다."),
     NOT_FOUND_RESERVATION(404, "예약 중인 주식을 찾을 수 없습니다."),
 
     // mail

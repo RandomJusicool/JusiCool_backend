@@ -4,8 +4,8 @@ import com.juicycool.backend.domain.reservation.Reservation;
 import com.juicycool.backend.domain.reservation.Status;
 import com.juicycool.backend.domain.reservation.repository.ReservationRepository;
 import com.juicycool.backend.domain.stock.Stock;
+import com.juicycool.backend.domain.stock.exception.InvalidBuyingNumberException;
 import com.juicycool.backend.domain.stock.exception.NotFoundStockException;
-import com.juicycool.backend.domain.stock.exception.PointLowerThanPresentPriceException;
 import com.juicycool.backend.domain.stock.presentation.dto.request.BuyReservRequestDto;
 import com.juicycool.backend.domain.stock.repository.StockRepository;
 import com.juicycool.backend.domain.stock.service.BuyReservationStockService;
@@ -30,8 +30,10 @@ public class BuyReservationStockServiceImpl implements BuyReservationStockServic
         Stock stock = stockRepository.findById(stockId)
                 .orElseThrow(NotFoundStockException::new);
 
-        if (dto.getGoal_price() * dto.getNum() > user.getPoints())
-            throw new PointLowerThanPresentPriceException();
+        if (user.getPoints() - (dto.getGoal_price() * dto.getNum()) < 0)
+            throw new InvalidBuyingNumberException();
+
+        user.deductPoints(dto.getGoal_price() * dto.getNum());
 
         saveReservation(user, dto, stock);
     }
@@ -39,8 +41,7 @@ public class BuyReservationStockServiceImpl implements BuyReservationStockServic
     private void saveReservation(User user, BuyReservRequestDto dto, Stock stock) {
         Reservation reservation = reservationRepository.findByUserAndStockCodeAndStatus(user, stock.getCode(), Status.BUY)
                 .orElse(Reservation.builder()
-                        .stockCode(stock.getCode())
-                        .stockName(stock.getName())
+                        .stock(stock)
                         .reservationPrice(dto.getGoal_price())
                         .status(Status.BUY)
                         .user(user)
