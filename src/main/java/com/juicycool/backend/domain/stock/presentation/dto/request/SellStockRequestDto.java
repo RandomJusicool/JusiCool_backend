@@ -7,5 +7,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SellStockRequestDto {
     private Long num;
-    private Long goal_price;
 }
