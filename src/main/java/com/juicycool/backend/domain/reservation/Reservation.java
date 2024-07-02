@@ -37,5 +37,4 @@ public class Reservation {
     public void plusStockNum(Long num) {
         this.stockNum += num;
     }
-
 }
