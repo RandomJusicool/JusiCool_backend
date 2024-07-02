@@ -9,6 +9,7 @@ import com.juicycool.backend.domain.stock.exception.NotFoundOwnedStockException;
 import com.juicycool.backend.domain.stock.exception.NotFoundReservationException;
 import com.juicycool.backend.domain.stock.exception.NotFoundStockException;
 import com.juicycool.backend.domain.stock.exception.PointLowerThanPresentPriceException;
+import com.juicycool.backend.domain.stock.presentation.dto.request.SellReservRequestDto;
 import com.juicycool.backend.domain.stock.presentation.dto.request.SellStockRequestDto;
 import com.juicycool.backend.domain.stock.repository.OwnedStocksRepository;
 import com.juicycool.backend.domain.stock.repository.StockRepository;
@@ -27,7 +28,7 @@ public class SellReservationStockServiceImpl implements SellReservationStockServ
     private final OwnedStocksRepository ownedStocksRepository;
     private final UserUtil userUtil;
 
-    public void execute(Long stockId, SellStockRequestDto dto) {
+    public void execute(Long stockId, SellReservRequestDto dto) {
         User user = userUtil.getCurrentUser();
 
         Stock stock = stockRepository.findById(stockId)
@@ -42,12 +43,12 @@ public class SellReservationStockServiceImpl implements SellReservationStockServ
         saveReservation(stock, dto, user);
     }
 
-    private void saveReservation(Stock stock, SellStockRequestDto dto, User user) {
+    private void saveReservation(Stock stock, SellReservRequestDto dto, User user) {
         if (reservationRepository.existsByUserAndStockCode(user, stock.getCode())) {
-            Reservation reservation = reservationRepository.findByUserAndStockCode(user, stock.getCode())
-                    .orElseThrow(NotFoundReservationException::new);
-
-            reservation.plusStockNum(dto.getNum());
+//            Reservation reservation = reservationRepository.findByUserAndStockCode(user, stock.getCode())
+//                    .orElseThrow(NotFoundReservationException::new);
+//
+//            reservation.plusStockNum(dto.getNum());
         } else {
             Reservation reservation = Reservation.builder()
                     .stockCode(stock.getCode())
