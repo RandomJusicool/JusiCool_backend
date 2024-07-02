@@ -1,12 +1,11 @@
 package com.juicycool.backend.domain.stock.presentation;
 
+import com.juicycool.backend.domain.stock.presentation.dto.request.BuyReservRequestDto;
 import com.juicycool.backend.domain.stock.presentation.dto.request.BuyStockRequestDto;
+import com.juicycool.backend.domain.stock.presentation.dto.request.SellReservRequestDto;
 import com.juicycool.backend.domain.stock.presentation.dto.request.SellStockRequestDto;
 import com.juicycool.backend.domain.stock.presentation.dto.response.GetListStockResponseDto;
-import com.juicycool.backend.domain.stock.service.BuyStockService;
-import com.juicycool.backend.domain.stock.service.GetListStockService;
-import com.juicycool.backend.domain.stock.service.SellReservationStockService;
-import com.juicycool.backend.domain.stock.service.SellStockService;
+import com.juicycool.backend.domain.stock.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +22,7 @@ public class StockController {
     private final SellStockService sellStockService;
     private final GetListStockService getListStockService;
     private final SellReservationStockService sellReservationStockService;
+    private final BuyReservationStockService buyReservationStockService;
 
     @PostMapping("/{stock_id}")
     public ResponseEntity<Void> buyStock(
@@ -51,9 +51,18 @@ public class StockController {
     @PostMapping("/sell/{stock_id}")
     public ResponseEntity<Void> sellReservationStock(
         @PathVariable("stock_id") Long stockId,
-        @RequestBody SellStockRequestDto dto
+        @RequestBody SellReservRequestDto dto
     ) {
         sellReservationStockService.execute(stockId, dto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/buy/{stock_id}")
+    public ResponseEntity<Void> buyReservationStock(
+        @PathVariable("stock_id") Long stockId,
+        @RequestBody BuyReservRequestDto dto
+    ) {
+        buyReservationStockService.execute(stockId, dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
