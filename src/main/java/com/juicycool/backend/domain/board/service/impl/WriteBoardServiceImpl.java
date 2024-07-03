@@ -31,6 +31,7 @@ public class WriteBoardServiceImpl implements WriteBoardService {
                 .orElseThrow(NotFoundCommunityException::new);
 
         saveBoard(user, community, dto);
+        community.plusBoardNum();
     }
 
     private void saveBoard(User user, Community community, WriteBoardRequestDto dto) {
