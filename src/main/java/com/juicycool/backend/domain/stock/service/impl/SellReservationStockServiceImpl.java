@@ -55,10 +55,11 @@ public class SellReservationStockServiceImpl implements SellReservationStockServ
         OwnedStocks ownedStocks = ownedStocksRepository.findByUserAndStock(user, stock)
                 .orElseThrow(NotFoundOwnedStockException::new);
 
-        reservation.plusStockNum(dto.getNum());
-
-        if (ownedStocks.getStockNumber() < reservation.getStockNum() + dto.getNum())
+        if (ownedStocks.getStockNumber() < reservation.getStockNum() + dto.getNum()) {
             throw new InvalidSellingNumberException();
+        }
+
+        reservation.plusStockNum(dto.getNum());
 
         reservationRepository.save(reservation);
     }
