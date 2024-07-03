@@ -6,6 +6,7 @@ import com.juicycool.backend.domain.auth.presentation.dto.request.SignUpRequestD
 import com.juicycool.backend.domain.auth.service.SignUpService;
 import com.juicycool.backend.domain.email.MailAuthEntity;
 import com.juicycool.backend.domain.email.repository.MailAuthRepository;
+import com.juicycool.backend.domain.user.Authority;
 import com.juicycool.backend.domain.user.User;
 import com.juicycool.backend.domain.user.repository.UserRepository;
 import com.juicycool.backend.global.annotation.TransactionService;
@@ -35,6 +36,7 @@ public class SignUpServiceImpl implements SignUpService {
         User user = User.builder()
                 .email(dto.getEmail())
                 .name(dto.getName())
+                .authority(Authority.USER)
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .points(100000L)
                 .build();
