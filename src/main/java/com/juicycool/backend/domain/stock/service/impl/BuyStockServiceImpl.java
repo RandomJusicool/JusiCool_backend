@@ -37,11 +37,14 @@ public class BuyStockServiceImpl implements BuyStockService {
     }
 
     private void saveOwnedStock(Long number, User user, Stock stock) {
-        OwnedStocks ownedStock = OwnedStocks.builder()
-                .stockNumber(number)
-                .user(user)
-                .stock(stock)
-                .build();
+        OwnedStocks ownedStock = ownedStocksRepository.findByUserAndStock(user, stock)
+                .orElse(OwnedStocks.builder()
+                        .stockNumber(0L)
+                        .user(user)
+                        .stock(stock)
+                        .build());
+
+        ownedStock.plusStockNum(number);
 
         ownedStocksRepository.save(ownedStock);
     }
