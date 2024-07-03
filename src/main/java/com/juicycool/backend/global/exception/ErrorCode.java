@@ -39,6 +39,7 @@ public enum ErrorCode {
 
     // like
     NOT_FOUND_LIKE(404, "유저가 누른 좋아요를 찾을 수 없습니다."),
+    ALREADY_EXIST_LIKE(400, "이미 누른 좋아요입니다."),
 
     // user
     NOT_FOUND_USER(404, "해당 유저를 찾을 수 없습니다."),
