@@ -31,5 +31,6 @@ public class OwnedStocks {
     public void discountStockNumber(Long num) {
         stockNumber -= num;
     }
+    public void plusStockNum(Long num) {stockNumber += num;}
 
 }
