@@ -4,6 +4,7 @@ import com.juicycool.backend.domain.board.Board;
 import com.juicycool.backend.domain.board.exception.NotFoundBoardException;
 import com.juicycool.backend.domain.board.repository.BoardRepository;
 import com.juicycool.backend.domain.like.Likes;
+import com.juicycool.backend.domain.like.exception.AlreadyExistLikeException;
 import com.juicycool.backend.domain.like.repository.LikeRepository;
 import com.juicycool.backend.domain.like.service.AddLikeService;
 import com.juicycool.backend.domain.user.User;
@@ -20,19 +21,24 @@ public class AddLikeServiceImpl implements AddLikeService {
     private final UserUtil userUtil;
 
     public void execute(Long boardId) {
+        User user = userUtil.getCurrentUser();
+
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(NotFoundBoardException::new);
 
-        saveLike(boardId);
+        if (likeRepository.existsByBoardIdAndUserId(boardId, user.getId()))
+            throw new AlreadyExistLikeException();
+
+        saveLike(boardId, user.getId());
         board.addLikes();
     }
 
-    private void saveLike(Long boardId) {
-        User user = userUtil.getCurrentUser();
+    private void saveLike(Long boardId, Long userId) {
+
 
         Likes like = Likes.builder()
                 .boardId(boardId)
-                .userId(user.getId())
+                .userId(userId)
                 .build();
 
         likeRepository.save(like);
