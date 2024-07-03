@@ -23,4 +23,6 @@ public class Community {
 
     private Integer boardNum;
 
+    public void plusBoardNum() {boardNum += 1;}
+    public void minusBoardNum() {boardNum -= 1;}
 }

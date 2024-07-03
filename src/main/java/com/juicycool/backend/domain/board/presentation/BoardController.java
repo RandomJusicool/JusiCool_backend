@@ -53,9 +53,12 @@ public class BoardController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{board_id}")
-    public ResponseEntity<Void> deleteBoard(@PathVariable("board_id") Long boardId) {
-        deleteBoardService.execute(boardId);
+    @DeleteMapping("/{community_id}/{board_id}")
+    public ResponseEntity<Void> deleteBoard(
+        @PathVariable("community_id") Long communityId,
+        @PathVariable("board_id") Long boardId
+    ) {
+        deleteBoardService.execute(communityId, boardId);
         return ResponseEntity.noContent().build();
     }
 }
