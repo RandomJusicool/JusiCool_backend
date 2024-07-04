@@ -1,7 +1,5 @@
 package com.juicycool.backend.domain.community;
 
-import com.juicycool.backend.domain.user.User;
-import com.juicycool.backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
