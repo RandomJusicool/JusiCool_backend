@@ -38,5 +38,5 @@ public class Day {
 
     private Long upDownPercent; // 등략률
 
-    private LocalDateTime storeAt; // 저장된 시간
+    private String storeAt; // 저장된 시간
 }
