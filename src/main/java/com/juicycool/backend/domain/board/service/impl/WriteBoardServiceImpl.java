@@ -13,7 +13,8 @@ import com.juicycool.backend.global.annotation.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @TransactionService
 @RequiredArgsConstructor
@@ -40,7 +41,7 @@ public class WriteBoardServiceImpl implements WriteBoardService {
                 .content(dto.getContent())
                 .user(user)
                 .community(community)
-                .createdAt(String.valueOf(LocalDate.now()))
+                .createdAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd HH:mm")))
                 .commentNum(0)
                 .likes(0)
                 .build();
