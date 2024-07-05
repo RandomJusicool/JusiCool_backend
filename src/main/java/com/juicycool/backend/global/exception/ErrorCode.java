@@ -30,6 +30,7 @@ public enum ErrorCode {
     ALREADY_AUTHENTICATED_MAIL(400, "이미 인증된 메일입니다."),
     EXPIRED_AUTH_CODE(401, "이미 만료된 인증코드입니다."),
     NOT_VERIFICATION_MAIL(401, "인증된 메일이 아닙니다."),
+    FAIL_SEND_MAIL(500, "이메일 전송을 실패하였습니다."),
 
     // community
     NOT_FOUND_COMMUNITY(404, "존재하지 않는 커뮤니티입니다."),
