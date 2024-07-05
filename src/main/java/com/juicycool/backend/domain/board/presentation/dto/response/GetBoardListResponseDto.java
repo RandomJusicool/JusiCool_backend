@@ -10,6 +10,7 @@ public class GetBoardListResponseDto {
     private Long id;
     private String title;
     private String content;
+    private String name;
     private String created_at;
     private Integer likes;
     private Integer comment_num;
