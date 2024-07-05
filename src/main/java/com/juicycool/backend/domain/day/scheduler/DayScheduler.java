@@ -1,5 +1,6 @@
 package com.juicycool.backend.domain.day.scheduler;
 
+import com.juicycool.backend.domain.day.service.ClearDayService;
 import com.juicycool.backend.domain.day.service.SaveDayService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class DayScheduler {
 
     private final SaveDayService saveDayService;
+    private final ClearDayService clearDayService;
 
     @Scheduled(cron = "0 5-55/10 8-14 * * *", zone = "Asia/Seoul")
     @Scheduled(cron = "0 5,15,25,35 15 * * *", zone = "Asia/Seoul")
@@ -19,5 +21,12 @@ public class DayScheduler {
         log.info("--------------saveDay start--------------");
         saveDayService.saveDay();
         log.info("--------------saveDay end--------------");
+    }
+
+    @Scheduled(cron = "0 55 7 * * *", zone = "Asia/Seoul")
+    public void clearDay() {
+        log.info("--------------clearDay start--------------");
+        clearDayService.execute();
+        log.info("--------------clearDay end--------------");
     }
 }
