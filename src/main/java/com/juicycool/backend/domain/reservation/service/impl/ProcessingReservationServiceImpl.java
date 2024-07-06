@@ -41,31 +41,39 @@ public class ProcessingReservationServiceImpl implements ProcessingReservationSe
 
             if (reservation.getReservationPrice() == findReservationStock.getPresentPrice()) {
                 if (reservation.getStatus() == Status.BUY) {
-                    saveOwnedStock(reservation.getStockNum(), reservation.getUser(), findReservationStock);
-
-                    saveReceipt(reservation.getUser(), findReservationStock, reservation.getReservationPrice() * reservation.getStockNum());
-
-                    reservationRepository.delete(reservation);
+                    processBuyingStock(reservation, findReservationStock);
                 } else if (reservation.getStatus() == Status.SELL) {
-                    OwnedStocks ownedStocks = ownedStocksRepository.findByUserAndStock(reservation.getUser(), findReservationStock)
-                            .orElseThrow(NotFoundOwnedStockException::new);
-
-                    ownedStocks.discountStockNumber(reservation.getStockNum());
-
-                    if (ownedStocks.getStockNumber() == 0) {
-                        ownedStocksRepository.delete(ownedStocks);
-                    } else if (ownedStocks.getStockNumber() < 0) {
-                        throw new InvalidSellingNumberException();
-                    }
-
-                    Long sellPoints = findReservationStock.getPresentPrice() * reservation.getStockNum();
-
-                    reservation.getUser().addSellPoints(sellPoints);
-
-                    saveReceipt(reservation.getUser(), findReservationStock, sellPoints);
+                    processSellingStock(reservation, findReservationStock);
                 }
             }
         }
+    }
+
+    private void processBuyingStock(Reservation reservation, Stock stock) {
+        saveOwnedStock(reservation.getStockNum(), reservation.getUser(), stock);
+
+        saveReceipt(reservation.getUser(), stock, reservation.getReservationPrice() * reservation.getStockNum());
+
+        reservationRepository.delete(reservation);
+    }
+
+    private void processSellingStock(Reservation reservation, Stock stock) {
+        OwnedStocks ownedStocks = ownedStocksRepository.findByUserAndStock(reservation.getUser(), stock)
+                .orElseThrow(NotFoundOwnedStockException::new);
+
+        ownedStocks.discountStockNumber(reservation.getStockNum());
+
+        if (ownedStocks.getStockNumber() == 0) {
+            ownedStocksRepository.delete(ownedStocks);
+        } else if (ownedStocks.getStockNumber() < 0) {
+            throw new InvalidSellingNumberException();
+        }
+
+        Long sellPoints = stock.getPresentPrice() * reservation.getStockNum();
+
+        reservation.getUser().addSellPoints(sellPoints);
+
+        saveReceipt(reservation.getUser(), stock, sellPoints);
     }
 
     private void saveOwnedStock(Long number, User user, Stock stock) {
