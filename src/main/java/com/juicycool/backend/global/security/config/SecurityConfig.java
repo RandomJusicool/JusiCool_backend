@@ -61,6 +61,9 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/api/v1/email").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/email").permitAll()
 
+                                // receipt
+                                .requestMatchers(HttpMethod.GET, "/api/v1/receipt").authenticated()
+
                                 // stock
                                 .requestMatchers(HttpMethod.POST, "/api/v1/stock/{stock_id}").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/api/v1/stock/{stock_id}").authenticated()
