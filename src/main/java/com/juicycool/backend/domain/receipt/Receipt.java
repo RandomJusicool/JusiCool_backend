@@ -21,6 +21,7 @@ public class Receipt {
 
     private String stockName;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     private Long price;
