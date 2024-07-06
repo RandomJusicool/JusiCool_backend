@@ -1,5 +1,8 @@
 package com.juicycool.backend.domain.stock.service.impl;
 
+import com.juicycool.backend.domain.receipt.Receipt;
+import com.juicycool.backend.domain.receipt.repository.ReceiptRepository;
+import com.juicycool.backend.domain.reservation.Status;
 import com.juicycool.backend.domain.stock.OwnedStocks;
 import com.juicycool.backend.domain.stock.Stock;
 import com.juicycool.backend.domain.stock.exception.NotFoundStockException;
@@ -20,6 +23,7 @@ public class BuyStockServiceImpl implements BuyStockService {
     private final StockRepository stockRepository;
     private final OwnedStocksRepository ownedStocksRepository;
     private final UserUtil userUtil;
+    private final ReceiptRepository receiptRepository;
 
     public void execute(Long stockId, BuyStockRequestDto dto) {
         User user = userUtil.getCurrentUser();
@@ -34,6 +38,7 @@ public class BuyStockServiceImpl implements BuyStockService {
 
         saveOwnedStock(dto.getNum(), user, stock);
         user.deductPoints(allPoint);
+        saveReceipt(user, stock, allPoint);
     }
 
     private void saveOwnedStock(Long number, User user, Stock stock) {
@@ -47,5 +52,16 @@ public class BuyStockServiceImpl implements BuyStockService {
         ownedStock.plusStockNum(number);
 
         ownedStocksRepository.save(ownedStock);
+    }
+
+    private void saveReceipt(User user, Stock stock, Long buyPoints) {
+        Receipt receipt = Receipt.builder()
+                .price(buyPoints)
+                .status(Status.BUY)
+                .stockName(stock.getName())
+                .user(user)
+                .build();
+
+        receiptRepository.save(receipt);
     }
 }
