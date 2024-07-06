@@ -1,5 +1,8 @@
 package com.juicycool.backend.domain.stock.service.impl;
 
+import com.juicycool.backend.domain.receipt.Receipt;
+import com.juicycool.backend.domain.receipt.repository.ReceiptRepository;
+import com.juicycool.backend.domain.reservation.Status;
 import com.juicycool.backend.domain.stock.OwnedStocks;
 import com.juicycool.backend.domain.stock.Stock;
 import com.juicycool.backend.domain.stock.exception.InvalidSellingNumberException;
@@ -21,6 +24,7 @@ public class SellStockServiceImpl implements SellStockService {
     private final OwnedStocksRepository ownedStocksRepository;
     private final StockRepository stockRepository;
     private final UserUtil userUtil;
+    private final ReceiptRepository receiptRepository;
 
     public void execute(Long stockId, SellStockRequestDto dto) {
         User user = userUtil.getCurrentUser();
@@ -39,6 +43,20 @@ public class SellStockServiceImpl implements SellStockService {
             throw new InvalidSellingNumberException();
         }
 
-        user.addSellPoints(stock.getPresentPrice() * dto.getNum());
+        Long sellPoints = stock.getPresentPrice() * dto.getNum();
+
+        user.addSellPoints(sellPoints);
+        saveReceipt(user, stock, sellPoints);
+    }
+
+    private void saveReceipt(User user, Stock stock, Long buyPoints) {
+        Receipt receipt = Receipt.builder()
+                .price(buyPoints)
+                .status(Status.SELL)
+                .stockName(stock.getName())
+                .user(user)
+                .build();
+
+        receiptRepository.save(receipt);
     }
 }
