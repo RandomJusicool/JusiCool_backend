@@ -26,7 +26,7 @@ public class GetInfoStockServiceImpl implements GetInfoStockService {
                         .fluctuationComparedPreviousDay(stock.getFluctuationComparedPreviousDay())
                         .transactionVolume(stock.getTransactionVolume())
                         .transactionPrice(stock.getTransactionPrice())
-                        .upDownPercent((long)(((double)(stock.getHeadPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100))
+                        .upDownPercent((Math.floor(((double)(stock.getHeadPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100 * 10) / 10.0))
                         .upDownPrice(stock.getHeadPrice() - stock.getMarketPrice())
                 ).get().build();
     }
