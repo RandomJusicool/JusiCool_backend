@@ -18,9 +18,10 @@ public class GetListStockServiceImpl implements GetListStockService {
     public List<GetListStockResponseDto> execute() {
         return stockRepository.findAll().stream()
                 .map(stock -> GetListStockResponseDto.builder()
+                        .id(stock.getId())
                         .name(stock.getName())
                         .presentPrice(stock.getPresentPrice())
-                        .upDownPercent((long)(((double)(stock.getHeadPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100))
+                        .upDownPercent((Math.floor(((double)(stock.getHeadPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100 * 10) / 10.0))
                         .upDownPrice(stock.getHeadPrice() - stock.getMarketPrice())
                         .build())
                 .collect(Collectors.toList());
