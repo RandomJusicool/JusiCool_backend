@@ -9,7 +9,7 @@ public class GetInfoStockResponseDto {
     private String name; // 주식 이름
     private Integer code; // 주식 코드
     private Long upDownPrice;
-    private Long upDownPercent;
+    private Double upDownPercent;
     private Long marketPrice; // 시가
     private Long headPrice; // 종가
     private Long highPrice; // 고가
