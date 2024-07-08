@@ -18,7 +18,7 @@ public class GetBoardInfoServiceImpl implements GetBoardInfoService {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(NotFoundBoardException::new);
 
-        return new GetBoardInfoResponseDto(board.getTitle(), board.getContent(), board.getLikes());
+        return new GetBoardInfoResponseDto(board.getCommunity().getName(), board.getTitle(), board.getContent(), board.getLikes());
 
     }
 }
