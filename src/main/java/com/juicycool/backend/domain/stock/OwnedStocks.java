@@ -20,6 +20,8 @@ public class OwnedStocks {
 
     private Long stockNumber; // 보유 중인 갯수
 
+    private Long points;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -32,5 +34,7 @@ public class OwnedStocks {
         stockNumber -= num;
     }
     public void plusStockNum(Long num) {stockNumber += num;}
+    public void plusPoints(Long allPoint) {points += allPoint;}
+    public void minusPoints(Long discountPoint) {points -= discountPoint;}
 
 }

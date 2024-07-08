@@ -36,6 +36,7 @@ public class SellStockServiceImpl implements SellStockService {
                 .orElseThrow(NotFoundOwnedStockException::new);
 
         ownedStocks.discountStockNumber(dto.getNum());
+        ownedStocks.minusPoints(stock.getPresentPrice() * dto.getNum());
 
         if (ownedStocks.getStockNumber() == 0) {
             ownedStocksRepository.delete(ownedStocks);

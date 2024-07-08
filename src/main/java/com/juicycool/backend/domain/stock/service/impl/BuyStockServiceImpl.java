@@ -45,11 +45,13 @@ public class BuyStockServiceImpl implements BuyStockService {
         OwnedStocks ownedStock = ownedStocksRepository.findByUserAndStock(user, stock)
                 .orElse(OwnedStocks.builder()
                         .stockNumber(0L)
+                        .points(0L)
                         .user(user)
                         .stock(stock)
                         .build());
 
         ownedStock.plusStockNum(number);
+        ownedStock.plusPoints(stock.getPresentPrice() * number);
 
         ownedStocksRepository.save(ownedStock);
     }
