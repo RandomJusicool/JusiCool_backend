@@ -50,7 +50,7 @@ public class ProcessingReservationServiceImpl implements ProcessingReservationSe
     }
 
     private void processBuyingStock(Reservation reservation, Stock stock) {
-        saveOwnedStock(reservation.getStockNum(), reservation.getUser(), stock);
+        saveOwnedStock(reservation.getStockNum(), reservation.getUser(), stock, reservation.getReservationPrice());
 
         saveReceipt(reservation.getUser(), stock, reservation.getReservationPrice() * reservation.getStockNum());
 
@@ -62,6 +62,7 @@ public class ProcessingReservationServiceImpl implements ProcessingReservationSe
                 .orElseThrow(NotFoundOwnedStockException::new);
 
         ownedStocks.discountStockNumber(reservation.getStockNum());
+        ownedStocks.minusPoints(stock.getPresentPrice() * reservation.getStockNum());
 
         if (ownedStocks.getStockNumber() == 0) {
             ownedStocksRepository.delete(ownedStocks);
@@ -76,7 +77,7 @@ public class ProcessingReservationServiceImpl implements ProcessingReservationSe
         saveReceipt(reservation.getUser(), stock, sellPoints);
     }
 
-    private void saveOwnedStock(Long number, User user, Stock stock) {
+    private void saveOwnedStock(Long number, User user, Stock stock, Long reservationPrice) {
         OwnedStocks ownedStock = ownedStocksRepository.findByUserAndStock(user, stock)
                 .orElse(OwnedStocks.builder()
                         .stockNumber(0L)
@@ -85,6 +86,7 @@ public class ProcessingReservationServiceImpl implements ProcessingReservationSe
                         .build());
 
         ownedStock.plusStockNum(number);
+        ownedStock.plusPoints(reservationPrice * number);
 
         ownedStocksRepository.save(ownedStock);
     }

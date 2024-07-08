@@ -34,5 +34,7 @@ public class OwnedStocks {
         stockNumber -= num;
     }
     public void plusStockNum(Long num) {stockNumber += num;}
+    public void plusPoints(Long allPoint) {points += allPoint;}
+    public void minusPoints(Long discountPoint) {points -= discountPoint;}
 
 }
