@@ -93,15 +93,13 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/api/v1/like/{board_id}").authenticated()
                                 .requestMatchers(HttpMethod.DELETE, "/api/v1/like/{board_id}").authenticated()
 
+                                // user
+                                .requestMatchers(HttpMethod.GET, "/api/v1/user").authenticated()
+
                                 .anyRequest().denyAll()
-
-
-
-
                 )
 
                 .addFilterBefore(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
-
 
         return http.build();
 
