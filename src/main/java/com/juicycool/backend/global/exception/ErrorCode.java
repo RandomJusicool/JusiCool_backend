@@ -45,7 +45,10 @@ public enum ErrorCode {
     // user
     NOT_FOUND_USER(404, "해당 유저를 찾을 수 없습니다."),
     NOT_MATCH_PASSWORD(400, "비밀번호가 일치하지 않습니다."),
-    NOT_MATCH_USER(400, "등록된 유저와 일치하지 않습니다.");
+    NOT_MATCH_USER(400, "등록된 유저와 일치하지 않습니다."),
+
+    // server
+    INTERNAL_SERVER_ERROR(500, "예기치 못한 서버 에러");
 
     private final int status;
     private final String message;

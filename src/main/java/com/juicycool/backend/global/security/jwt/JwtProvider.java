@@ -13,7 +13,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,8 +24,8 @@ import java.security.Key;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import static com.juicycool.backend.global.security.filter.JwtFilter.AUTHORIZATION_HEADER;
-import static com.juicycool.backend.global.security.filter.JwtFilter.BEARER_PREFIX;
+import static com.juicycool.backend.global.filter.JwtFilter.AUTHORIZATION_HEADER;
+import static com.juicycool.backend.global.filter.JwtFilter.BEARER_PREFIX;
 
 
 @Component

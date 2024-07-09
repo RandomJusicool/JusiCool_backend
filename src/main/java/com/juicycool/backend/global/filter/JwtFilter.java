@@ -1,4 +1,4 @@
-package com.juicycool.backend.global.security.filter;
+package com.juicycool.backend.global.filter;
 
 import com.juicycool.backend.global.security.jwt.JwtProvider;
 import jakarta.servlet.FilterChain;
