@@ -1,6 +1,9 @@
 package com.juicycool.backend.global.security.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.juicycool.backend.global.filter.ExceptionFilter;
 import com.juicycool.backend.global.filter.JwtFilter;
+import com.juicycool.backend.global.filter.RequestLogFilter;
 import com.juicycool.backend.global.security.handler.JwtAccessDeniedHandler;
 import com.juicycool.backend.global.security.handler.JwtAuthenticationEntryPoint;
 import com.juicycool.backend.global.security.jwt.JwtProvider;
@@ -25,6 +28,7 @@ public class SecurityConfig {
     private final JwtProvider jwtProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final ObjectMapper objectMapper;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -99,6 +103,8 @@ public class SecurityConfig {
                                 .anyRequest().denyAll()
                 )
 
+                .addFilterBefore(new RequestLogFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new ExceptionFilter(objectMapper), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
