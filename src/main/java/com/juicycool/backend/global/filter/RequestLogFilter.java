@@ -31,9 +31,9 @@ public class RequestLogFilter extends OncePerRequestFilter {
             log.info("response status = " + response.getStatus());
             log.info("=========================");
         } catch (Exception e) {
-            log.error("=========================");
-            log.error(e.getCause().toString());
-            log.error("=========================");
+//            log.error("=========================");
+//            log.error(e.getCause().toString());
+//            log.error("=========================");
         }
     }
 }
