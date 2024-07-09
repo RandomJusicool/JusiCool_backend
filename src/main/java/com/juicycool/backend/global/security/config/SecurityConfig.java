@@ -1,6 +1,6 @@
 package com.juicycool.backend.global.security.config;
 
-import com.juicycool.backend.global.security.filter.JwtFilter;
+import com.juicycool.backend.global.filter.JwtFilter;
 import com.juicycool.backend.global.security.handler.JwtAccessDeniedHandler;
 import com.juicycool.backend.global.security.handler.JwtAuthenticationEntryPoint;
 import com.juicycool.backend.global.security.jwt.JwtProvider;

@@ -1,6 +1,6 @@
 package com.juicycool.backend.global.security.config;
 
-import com.juicycool.backend.global.security.filter.JwtFilter;
+import com.juicycool.backend.global.filter.JwtFilter;
 import com.juicycool.backend.global.security.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
