@@ -103,7 +103,10 @@ public class SecurityConfig {
                                 .anyRequest().denyAll()
                 )
 
+                .addFilterBefore(new RequestLogFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new ExceptionFilter(objectMapper), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+
 
         return http.build();
 
