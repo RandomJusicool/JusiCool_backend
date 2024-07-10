@@ -32,8 +32,6 @@ public class Stock {
 
     private Long presentPrice; // 현재가
 
-    private Long contractPrice; // 체결가
-
     private Long fluctuationComparedPreviousDay; // 전일 대비 등락
 
     private Long marketCapitalization; // 시가 총액

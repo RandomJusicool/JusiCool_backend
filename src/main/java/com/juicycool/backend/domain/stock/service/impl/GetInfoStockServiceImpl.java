@@ -22,7 +22,6 @@ public class GetInfoStockServiceImpl implements GetInfoStockService {
                         .highPrice(stock.getHighPrice())
                         .lowPrice(stock.getLowPrice())
                         .presentPrice(stock.getPresentPrice())
-                        .contractPrice(stock.getContractPrice())
                         .fluctuationComparedPreviousDay(stock.getFluctuationComparedPreviousDay())
                         .transactionVolume(stock.getTransactionVolume())
                         .transactionPrice(stock.getTransactionPrice())

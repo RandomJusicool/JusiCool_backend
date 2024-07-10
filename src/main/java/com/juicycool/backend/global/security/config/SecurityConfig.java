@@ -100,6 +100,9 @@ public class SecurityConfig {
                                 // user
                                 .requestMatchers(HttpMethod.GET, "/api/v1/user").authenticated()
 
+                                // day
+                                .requestMatchers(HttpMethod.GET, "/api/v1/day/{stock_code}").authenticated()
+
                                 .anyRequest().denyAll()
                 )
 
