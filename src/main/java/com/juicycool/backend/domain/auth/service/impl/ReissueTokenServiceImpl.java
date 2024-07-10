@@ -8,6 +8,7 @@ import com.juicycool.backend.domain.auth.repository.RefreshTokenRepository;
 import com.juicycool.backend.domain.auth.service.ReissueTokenService;
 import com.juicycool.backend.global.annotation.TransactionService;
 import com.juicycool.backend.global.security.jwt.JwtProvider;
+import com.juicycool.backend.global.security.jwt.TokenParser;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Objects;
@@ -18,9 +19,10 @@ public class ReissueTokenServiceImpl implements ReissueTokenService {
 
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtProvider jwtProvider;
+    private final TokenParser tokenParser;
 
     public TokenResponse execute(String refreshToken) {
-        String parseToken = jwtProvider.parseRefreshToken(refreshToken);
+        String parseToken = tokenParser.parseRefreshToken(refreshToken);
 
         RefreshToken existedRefreshToken = refreshTokenRepository.findByToken(parseToken)
                 .orElseThrow(ExpiredRefreshTokenException::new);
