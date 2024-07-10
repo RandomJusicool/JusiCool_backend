@@ -8,6 +8,7 @@ import lombok.Getter;
 @Builder
 public class GetBoardListResponseDto {
     private Long id;
+    private String community_name;
     private String title;
     private String content;
     private String name;

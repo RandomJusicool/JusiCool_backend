@@ -26,6 +26,7 @@ public class GetBoardListServiceImpl implements GetBoardListService {
         return boardRepository.findByCommunity(community).stream()
                 .map(board -> GetBoardListResponseDto.builder()
                         .id(board.getId())
+                        .community_name(community.getName())
                         .title(board.getTitle())
                         .content(board.getContent())
                         .created_at(String.valueOf(board.getCreatedAt()))
