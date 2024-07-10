@@ -38,9 +38,10 @@ public class JwtProvider {
 
     private final AuthDetailsService authDetailsService;
     private final JwtProperties jwtProperties;
+    private final TokenParser tokenParser;
 
-    private Key getSignInKey() {
-        return Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes(StandardCharsets.UTF_8));
+    private Key getSignInAccessKey() {
+        return Keys.hmacShaKeyFor(jwtProperties.getAccessSecret().getBytes(StandardCharsets.UTF_8));
     }
 
     private Key getSignInSecretKey() {
@@ -58,7 +59,7 @@ public class JwtProvider {
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(getSignInAccessKey()).build().parseClaimsJws(token);
             return true;
         } catch (ExpiredJwtException e) {
             throw new ExpiredTokenException();
@@ -68,21 +69,13 @@ public class JwtProvider {
     }
 
     public Authentication getAuthentication(String accessToken) {
-        Claims claims = parseClaims(accessToken);
+        Claims claims = tokenParser.parseClaims(accessToken);
 
         if (claims.get(AUTHORITIES_KEY) == null) {
             throw new GlobalException(ErrorCode.INVALID_TOKEN);
         }
         UserDetails principal = authDetailsService.loadUserByUsername(claims.getSubject());
         return new UsernamePasswordAuthenticationToken(principal, "", principal.getAuthorities());
-    }
-
-    private Claims parseClaims(String accessToken) {
-        try {
-            return Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(accessToken).getBody();
-        } catch (ExpiredJwtException e) {
-            return e.getClaims();
-        }
     }
 
     public String resolveToken(HttpServletRequest request) {
@@ -93,14 +86,6 @@ public class JwtProvider {
         return null;
     }
 
-    public String parseRefreshToken(String refreshToken) {
-        if (refreshToken.startsWith(BEARER_TYPE)) {
-            return refreshToken.replace(BEARER_TYPE, "");
-        } else {
-            return null;
-        }
-    }
-
     public String generateAccessToken(String email) {
         Date accessTokenExpiresIn = new Date(System.currentTimeMillis() + ACCESS_TOKEN_TIME*1000);
 
@@ -109,7 +94,7 @@ public class JwtProvider {
                 .claim(AUTHORITIES_KEY, "JWT")
                 .setIssuedAt(new Date())
                 .setExpiration(accessTokenExpiresIn)
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .signWith(getSignInAccessKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -119,7 +104,7 @@ public class JwtProvider {
         return Jwts.builder()
                 .setSubject(email)
                 .setExpiration(refreshTokenExpiresIn)
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .signWith(getSignInSecretKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 }
