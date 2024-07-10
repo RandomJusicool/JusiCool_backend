@@ -43,6 +43,10 @@ public class JwtProvider {
         return Keys.hmacShaKeyFor(jwtProperties.getSecret().getBytes(StandardCharsets.UTF_8));
     }
 
+    private Key getSignInSecretKey() {
+        return Keys.hmacShaKeyFor(jwtProperties.getRefreshSecret().getBytes(StandardCharsets.UTF_8));
+    }
+
     public TokenResponse generateTokenDto(String email) {
         return TokenResponse.builder()
                 .accessToken(generateAccessToken(email))
