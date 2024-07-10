@@ -1,6 +1,7 @@
 package com.juicycool.backend.domain.email.service.impl;
 
 import com.juicycool.backend.domain.email.MailAuthEntity;
+import com.juicycool.backend.domain.email.exception.AlreadyAuthenticatedMailException;
 import com.juicycool.backend.domain.email.exception.ExpiredAuthCodeException;
 import com.juicycool.backend.domain.email.repository.MailAuthRepository;
 import com.juicycool.backend.domain.email.service.VerificationMailService;
@@ -18,6 +19,9 @@ public class VerificationMailServiceImpl implements VerificationMailService {
     public void execute(String email, String authCode) {
         MailAuthEntity emailAuth = mailAuthRepository.findById(email)
                 .orElseThrow(ExpiredAuthCodeException::new);
+
+        if (emailAuth.getAuthentication() == true)
+            throw new AlreadyAuthenticatedMailException();
 
         if (!Objects.equals(emailAuth.getRandomValue(), authCode))
             throw new ExpiredAuthCodeException();
