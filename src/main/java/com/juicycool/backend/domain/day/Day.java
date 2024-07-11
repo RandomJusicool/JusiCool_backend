@@ -32,8 +32,6 @@ public class Day {
 
     private Long presentPrice; // 현재가
 
-    private Long headPrice; // 종가
-
     private Long volume; // 거래량
 
     private Double upDownPercent; // 등략률
