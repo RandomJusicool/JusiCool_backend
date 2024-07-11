@@ -23,8 +23,8 @@ public class GetInfoStockServiceImpl implements GetInfoStockService {
                         .presentPrice(stock.getPresentPrice())
                         .transactionVolume(stock.getTransactionVolume())
                         .transactionPrice(stock.getTransactionPrice())
-                        .upDownPercent((Math.floor(((double)(stock.getHeadPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100 * 10) / 10.0))
-                        .upDownPrice(stock.getHeadPrice() - stock.getMarketPrice())
+                        .upDownPercent((Math.floor(((double)(stock.getPresentPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100 * 10) / 10.0))
+                        .upDownPrice(stock.getPresentPrice() - stock.getMarketPrice())
                 ).get().build();
     }
 }
