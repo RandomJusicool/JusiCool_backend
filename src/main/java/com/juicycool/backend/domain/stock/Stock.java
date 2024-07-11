@@ -32,6 +32,7 @@ public class Stock {
 
     private Long presentPrice; // 현재가
 
+    @Column(nullable = false)
     private Long fluctuationComparedPreviousDay; // 전일 대비 등락
 
     private Long marketCapitalization; // 시가 총액
@@ -39,7 +40,4 @@ public class Stock {
     private Long transactionVolume; // 거래량
 
     private Long transactionPrice; // 거래 대금
-
-
-
 }
