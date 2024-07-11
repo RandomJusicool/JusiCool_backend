@@ -31,7 +31,6 @@ public class SaveDayService {
                     .code(stock.getCode())
                     .marketPrice(stock.getMarketPrice())
                     .highPrice(stock.getHighPrice())
-                    .headPrice(stock.getHeadPrice())
                     .presentPrice(stock.getPresentPrice())
                     .lowPrice(stock.getLowPrice())
                     .volume(stock.getTransactionVolume())
