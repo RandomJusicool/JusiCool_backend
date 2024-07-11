@@ -39,7 +39,6 @@ public class SaveDayService {
                     .build();
 
             dayRepository.save(day);
-            stockRepository.delete(stock);
         }
     }
 }
