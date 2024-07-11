@@ -29,8 +29,8 @@ public class GetMyOwnedStockServiceImpl implements GetMyOwnedStockService {
                         .stock_name(ownedStock.getStock().getName())
                         .stock_num(ownedStock.getStockNumber())
                         .points(ownedStock.getPoints() / ownedStock.getStockNumber())
-                        .upDownPercent((Math.floor(((double)(ownedStock.getStock().getHeadPrice() - ownedStock.getStock().getMarketPrice()) / ownedStock.getStock().getMarketPrice()) * 100 * 10) / 10.0))
-                        .upDownPoints(ownedStock.getStock().getHeadPrice() - ownedStock.getStock().getMarketPrice())
+                        .upDownPercent((Math.floor(((double)(ownedStock.getStock().getPresentPrice() - ownedStock.getStock().getMarketPrice()) / ownedStock.getStock().getMarketPrice()) * 100 * 10) / 10.0))
+                        .upDownPoints(ownedStock.getStock().getPresentPrice() - ownedStock.getStock().getMarketPrice())
                         .build())
                 .collect(Collectors.toList());
     }

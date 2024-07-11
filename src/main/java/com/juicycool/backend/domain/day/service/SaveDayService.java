@@ -31,11 +31,10 @@ public class SaveDayService {
                     .code(stock.getCode())
                     .marketPrice(stock.getMarketPrice())
                     .highPrice(stock.getHighPrice())
-                    .headPrice(stock.getHeadPrice())
                     .presentPrice(stock.getPresentPrice())
                     .lowPrice(stock.getLowPrice())
                     .volume(stock.getTransactionVolume())
-                    .upDownPercent(stock.getFluctuationComparedPreviousDay())
+                    .upDownPercent((Math.floor(((double)(stock.getPresentPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100 * 10) / 10.0))
                     .storeAt(format)
                     .build();
 

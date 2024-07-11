@@ -18,15 +18,13 @@ public class GetInfoStockServiceImpl implements GetInfoStockService {
                         .name(stock.getName())
                         .code(stock.getCode())
                         .marketPrice(stock.getMarketPrice())
-                        .headPrice(stock.getHeadPrice())
                         .highPrice(stock.getHighPrice())
                         .lowPrice(stock.getLowPrice())
                         .presentPrice(stock.getPresentPrice())
-                        .fluctuationComparedPreviousDay(stock.getFluctuationComparedPreviousDay())
                         .transactionVolume(stock.getTransactionVolume())
                         .transactionPrice(stock.getTransactionPrice())
-                        .upDownPercent((Math.floor(((double)(stock.getHeadPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100 * 10) / 10.0))
-                        .upDownPrice(stock.getHeadPrice() - stock.getMarketPrice())
+                        .upDownPercent((Math.floor(((double)(stock.getPresentPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100 * 10) / 10.0))
+                        .upDownPrice(stock.getPresentPrice() - stock.getMarketPrice())
                 ).get().build();
     }
 }

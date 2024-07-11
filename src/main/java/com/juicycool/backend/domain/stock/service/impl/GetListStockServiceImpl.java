@@ -21,8 +21,8 @@ public class GetListStockServiceImpl implements GetListStockService {
                         .id(stock.getId())
                         .name(stock.getName())
                         .presentPrice(stock.getPresentPrice())
-                        .upDownPercent((Math.floor(((double)(stock.getHeadPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100 * 10) / 10.0))
-                        .upDownPrice(stock.getHeadPrice() - stock.getMarketPrice())
+                        .upDownPercent((Math.floor(((double)(stock.getPresentPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100 * 10) / 10.0))
+                        .upDownPrice(stock.getPresentPrice() - stock.getMarketPrice())
                         .build())
                 .collect(Collectors.toList());
     }
