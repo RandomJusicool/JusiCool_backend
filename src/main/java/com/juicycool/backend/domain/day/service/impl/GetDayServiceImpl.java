@@ -22,7 +22,6 @@ public class GetDayServiceImpl implements GetDayService {
                         .highPrice(day.getHighPrice())
                         .lowPrice(day.getLowPrice())
                         .presentPrice(day.getPresentPrice())
-                        .headPrice(day.getHeadPrice())
                         .volume(day.getVolume())
                         .upDownPercent(day.getUpDownPercent())
                         .storeAt(day.getStoreAt())
