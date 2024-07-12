@@ -23,7 +23,7 @@ public class CancelLikeServiceImpl implements CancelLikeService {
     public void execute(Long boardId) {
         User user = userUtil.getCurrentUser();
 
-        if (!likeRepository.existsByUserId(user.getId()))
+        if (!likeRepository.existsByBoardIdAndUserId(boardId, user.getId()))
             throw new NotFoundLikeException();
 
         Board board = boardRepository.findById(boardId)
