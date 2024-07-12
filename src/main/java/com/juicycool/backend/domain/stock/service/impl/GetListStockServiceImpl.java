@@ -19,7 +19,7 @@ public class GetListStockServiceImpl implements GetListStockService {
 
     public List<GetListStockResponseDto> execute() {
         return stockRepository.findAll().stream()
-                .map(stockConverter::toDto)
+                .map(stockConverter::toListDto)
                 .collect(Collectors.toList());
     }
 }
