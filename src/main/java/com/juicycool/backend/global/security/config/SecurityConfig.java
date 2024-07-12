@@ -81,7 +81,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/v1/board/{board_id}").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/board/list/{community_id}").authenticated()
                                 .requestMatchers(HttpMethod.PATCH, "/api/v1/board/{board_id}").authenticated()
-                                .requestMatchers(HttpMethod.DELETE, "/api/v1/board/{board_id}").authenticated()
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/board/{community_id}/{board_id}").authenticated()
 
                                 // reservation
                                 .requestMatchers(HttpMethod.GET, "/api/v1/reservation").authenticated()

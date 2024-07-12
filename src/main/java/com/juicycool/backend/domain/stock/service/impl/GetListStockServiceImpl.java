@@ -1,5 +1,6 @@
 package com.juicycool.backend.domain.stock.service.impl;
 
+import com.juicycool.backend.domain.stock.converter.StockConverter;
 import com.juicycool.backend.domain.stock.presentation.dto.response.GetListStockResponseDto;
 import com.juicycool.backend.domain.stock.repository.StockRepository;
 import com.juicycool.backend.domain.stock.service.GetListStockService;
@@ -14,16 +15,11 @@ import java.util.stream.Collectors;
 public class GetListStockServiceImpl implements GetListStockService {
 
     private final StockRepository stockRepository;
+    private final StockConverter stockConverter;
 
     public List<GetListStockResponseDto> execute() {
         return stockRepository.findAll().stream()
-                .map(stock -> GetListStockResponseDto.builder()
-                        .id(stock.getId())
-                        .name(stock.getName())
-                        .presentPrice(stock.getPresentPrice())
-                        .upDownPercent((Math.floor(((double)(stock.getPresentPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100 * 10) / 10.0))
-                        .upDownPrice(stock.getPresentPrice() - stock.getMarketPrice())
-                        .build())
+                .map(stockConverter::toListDto)
                 .collect(Collectors.toList());
     }
 }
