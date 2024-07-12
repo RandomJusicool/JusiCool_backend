@@ -1,5 +1,6 @@
 package com.juicycool.backend.domain.stock.service.impl;
 
+import com.juicycool.backend.domain.stock.converter.StockConverter;
 import com.juicycool.backend.domain.stock.presentation.dto.response.GetInfoStockResponseDto;
 import com.juicycool.backend.domain.stock.repository.StockRepository;
 import com.juicycool.backend.domain.stock.service.GetInfoStockService;
@@ -11,17 +12,11 @@ import lombok.RequiredArgsConstructor;
 public class GetInfoStockServiceImpl implements GetInfoStockService {
 
     private final StockRepository stockRepository;
+    private final StockConverter stockConverter;
 
     public GetInfoStockResponseDto execute(Long stockId) {
         return stockRepository.findById(stockId)
-                .map(stock -> GetInfoStockResponseDto.builder()
-                        .name(stock.getName())
-                        .code(stock.getCode())
-                        .presentPrice(stock.getPresentPrice())
-                        .transactionVolume(stock.getTransactionVolume())
-                        .transactionPrice(stock.getTransactionPrice())
-                        .upDownPercent((Math.floor(((double)(stock.getPresentPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100 * 10) / 10.0))
-                        .upDownPrice(stock.getPresentPrice() - stock.getMarketPrice())
-                ).get().build();
+                .map(stockConverter::toInfoDto)
+                .get();
     }
 }

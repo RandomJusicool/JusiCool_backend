@@ -4,5 +4,6 @@ import com.juicycool.backend.domain.stock.Stock;
 import com.juicycool.backend.domain.stock.presentation.dto.response.GetListStockResponseDto;
 
 public interface StockConverter {
-    GetListStockResponseDto toDto(Stock stock);
+    GetListStockResponseDto toListDto(Stock stock);
+    GetInfoStockResponseDto toInfoDto(Stock stock);
 }
