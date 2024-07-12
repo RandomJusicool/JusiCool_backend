@@ -3,6 +3,7 @@ package com.juicycool.backend.domain.user.service.impl;
 import com.juicycool.backend.domain.stock.OwnedStocks;
 import com.juicycool.backend.domain.stock.repository.OwnedStocksRepository;
 import com.juicycool.backend.domain.user.User;
+import com.juicycool.backend.domain.user.converter.UserConverter;
 import com.juicycool.backend.domain.user.presentation.dto.response.GetMyOwnedStockResponseDto;
 import com.juicycool.backend.domain.user.service.GetMyOwnedStockService;
 import com.juicycool.backend.domain.user.util.UserUtil;
@@ -18,6 +19,8 @@ public class GetMyOwnedStockServiceImpl implements GetMyOwnedStockService {
 
     private final OwnedStocksRepository ownedStocksRepository;
     private final UserUtil userUtil;
+    private final UserConverter userConverter;
+
 
     public List<GetMyOwnedStockResponseDto> execute() {
         User user = userUtil.getCurrentUser();
@@ -25,13 +28,7 @@ public class GetMyOwnedStockServiceImpl implements GetMyOwnedStockService {
         List<OwnedStocks> ownedStocks = ownedStocksRepository.findByUser(user);
 
         return ownedStocks.stream()
-                .map(ownedStock -> GetMyOwnedStockResponseDto.builder()
-                        .stock_name(ownedStock.getStock().getName())
-                        .stock_num(ownedStock.getStockNumber())
-                        .points(ownedStock.getPoints() / ownedStock.getStockNumber())
-                        .upDownPercent((Math.floor(((double)(ownedStock.getStock().getPresentPrice() - ownedStock.getStock().getMarketPrice()) / ownedStock.getStock().getMarketPrice()) * 100 * 10) / 10.0))
-                        .upDownPoints(ownedStock.getStock().getPresentPrice() - ownedStock.getStock().getMarketPrice())
-                        .build())
+                .map(userConverter::toDto)
                 .collect(Collectors.toList());
     }
 }
