@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 public class Stock {
 
     @Id
-    private String name; // 주식 이름
-
     private Integer code; // 주식 코드
+
+    private String name; // 주식 이름
 
     private Long marketPrice; // 시가
 
