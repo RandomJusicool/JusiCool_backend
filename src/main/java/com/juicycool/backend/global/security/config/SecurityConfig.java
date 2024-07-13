@@ -69,12 +69,12 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/v1/receipt").authenticated()
 
                                 // stock
-                                .requestMatchers(HttpMethod.POST, "/api/v1/stock/{stock_id}").authenticated()
-                                .requestMatchers(HttpMethod.DELETE, "/api/v1/stock/{stock_id}").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/stock/{stock_code}").authenticated()
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/stock/{stock_code}").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/stock").authenticated()
-                                .requestMatchers(HttpMethod.POST, "/api/v1/stock/sell/{stock_id}").authenticated()
-                                .requestMatchers(HttpMethod.POST, "/api/v1/stock/buy/{stock_id}").authenticated()
-                                .requestMatchers(HttpMethod.GET, "/api/v1/stock/{stock_id}").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/stock/sell/{stock_code}").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/stock/buy/{stock_code}").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/stock/{stock_code}").authenticated()
 
                                 // board
                                 .requestMatchers(HttpMethod.POST, "/api/v1/board/{community_id}").authenticated()
