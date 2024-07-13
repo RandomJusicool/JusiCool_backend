@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class GetListStockResponseDto {
-    private Long id;
+    private Integer code;
     private String name;
     private Long presentPrice;
     private Long upDownPrice;

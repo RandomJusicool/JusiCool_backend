@@ -26,21 +26,21 @@ public class StockController {
     private final BuyReservationStockService buyReservationStockService;
     private final GetInfoStockService getInfoStockService;
 
-    @PostMapping("/{stock_id}")
+    @PostMapping("/{stock_code}")
     public ResponseEntity<Void> buyStock(
-        @PathVariable("stock_id") Long stockId,
+        @PathVariable("stock_code") Integer stockCode,
         @RequestBody BuyStockRequestDto dto
     ) {
-        buyStockService.execute(stockId, dto);
+        buyStockService.execute(stockCode, dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @DeleteMapping("/{stock_id}")
+    @DeleteMapping("/{stock_code}")
     public ResponseEntity<Void> sellStock(
-        @PathVariable("stock_id") Long stockId,
+        @PathVariable("stock_code") Integer stockCode,
         @RequestBody SellStockRequestDto dto
     ) {
-        sellStockService.execute(stockId, dto);
+        sellStockService.execute(stockCode, dto);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
@@ -50,27 +50,27 @@ public class StockController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/sell/{stock_id}")
+    @PostMapping("/sell/{stock_code}")
     public ResponseEntity<Void> sellReservationStock(
-        @PathVariable("stock_id") Long stockId,
+        @PathVariable("stock_code") Integer stockCode,
         @RequestBody SellReservRequestDto dto
     ) {
-        sellReservationStockService.execute(stockId, dto);
+        sellReservationStockService.execute(stockCode, dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/buy/{stock_id}")
+    @PostMapping("/buy/{stock_code}")
     public ResponseEntity<Void> buyReservationStock(
-        @PathVariable("stock_id") Long stockId,
+        @PathVariable("stock_code") Integer stockCode,
         @RequestBody BuyReservRequestDto dto
     ) {
-        buyReservationStockService.execute(stockId, dto);
+        buyReservationStockService.execute(stockCode, dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/{stock_id}")
-    public ResponseEntity<GetInfoStockResponseDto> getInfoStock(@PathVariable("stock_id") Long stockId) {
-        GetInfoStockResponseDto response = getInfoStockService.execute(stockId);
+    @GetMapping("/{stock_code}")
+    public ResponseEntity<GetInfoStockResponseDto> getInfoStock(@PathVariable("stock_code") Integer stockCode) {
+        GetInfoStockResponseDto response = getInfoStockService.execute(stockCode);
         return ResponseEntity.ok(response);
     }
 }

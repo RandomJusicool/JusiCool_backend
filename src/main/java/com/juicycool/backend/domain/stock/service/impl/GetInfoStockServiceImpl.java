@@ -14,8 +14,8 @@ public class GetInfoStockServiceImpl implements GetInfoStockService {
     private final StockRepository stockRepository;
     private final StockConverter stockConverter;
 
-    public GetInfoStockResponseDto execute(Long stockId) {
-        return stockRepository.findById(stockId)
+    public GetInfoStockResponseDto execute(Integer stockCode) {
+        return stockRepository.findById(stockCode)
                 .map(stockConverter::toInfoDto)
                 .get();
     }
