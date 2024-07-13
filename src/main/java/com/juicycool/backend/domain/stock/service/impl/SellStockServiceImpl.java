@@ -26,10 +26,10 @@ public class SellStockServiceImpl implements SellStockService {
     private final UserUtil userUtil;
     private final ReceiptRepository receiptRepository;
 
-    public void execute(Long stockId, SellStockRequestDto dto) {
+    public void execute(Integer stockCode, SellStockRequestDto dto) {
         User user = userUtil.getCurrentUser();
 
-        Stock stock = stockRepository.findById(stockId)
+        Stock stock = stockRepository.findById(stockCode)
                 .orElseThrow(NotFoundStockException::new);
 
         OwnedStocks ownedStocks = ownedStocksRepository.findByUserAndStock(user, stock)

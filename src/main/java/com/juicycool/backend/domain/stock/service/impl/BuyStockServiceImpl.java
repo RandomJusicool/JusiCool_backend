@@ -25,10 +25,10 @@ public class BuyStockServiceImpl implements BuyStockService {
     private final UserUtil userUtil;
     private final ReceiptRepository receiptRepository;
 
-    public void execute(Long stockId, BuyStockRequestDto dto) {
+    public void execute(Integer stockCode, BuyStockRequestDto dto) {
         User user = userUtil.getCurrentUser();
 
-        Stock stock = stockRepository.findById(stockId)
+        Stock stock = stockRepository.findById(stockCode)
                 .orElseThrow(NotFoundStockException::new);
 
         Long allPoint = stock.getPresentPrice() * dto.getNum();
