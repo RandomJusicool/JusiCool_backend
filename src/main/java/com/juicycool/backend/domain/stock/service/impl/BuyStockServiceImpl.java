@@ -25,7 +25,7 @@ public class BuyStockServiceImpl implements BuyStockService {
     private final UserUtil userUtil;
     private final ReceiptRepository receiptRepository;
 
-    public void execute(Integer stockCode, BuyStockRequestDto dto) {
+    public void execute(String stockCode, BuyStockRequestDto dto) {
         User user = userUtil.getCurrentUser();
 
         Stock stock = stockRepository.findById(stockCode)

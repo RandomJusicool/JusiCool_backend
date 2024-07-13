@@ -24,7 +24,7 @@ public class BuyReservationStockServiceImpl implements BuyReservationStockServic
     private final UserUtil userUtil;
     private final ReservationRepository reservationRepository;
 
-    public void execute(Integer stockCode, BuyReservRequestDto dto) {
+    public void execute(String stockCode, BuyReservRequestDto dto) {
         User user = userUtil.getCurrentUser();
 
         Stock stock = stockRepository.findById(stockCode)

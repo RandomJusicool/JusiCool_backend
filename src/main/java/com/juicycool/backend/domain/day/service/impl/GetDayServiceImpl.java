@@ -15,7 +15,7 @@ public class GetDayServiceImpl implements GetDayService {
 
     private final DayRepository dayRepository;
 
-    public List<GetDayResponseDto> execute(Integer stockCode) {
+    public List<GetDayResponseDto> execute(String stockCode) {
         return dayRepository.findByCode(stockCode).stream()
                 .map(day -> GetDayResponseDto.builder()
                         .marketPrice(day.getMarketPrice())

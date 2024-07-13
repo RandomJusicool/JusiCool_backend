@@ -28,7 +28,7 @@ public class StockController {
 
     @PostMapping("/{stock_code}")
     public ResponseEntity<Void> buyStock(
-        @PathVariable("stock_code") Integer stockCode,
+        @PathVariable("stock_code") String stockCode,
         @RequestBody BuyStockRequestDto dto
     ) {
         buyStockService.execute(stockCode, dto);
@@ -37,7 +37,7 @@ public class StockController {
 
     @DeleteMapping("/{stock_code}")
     public ResponseEntity<Void> sellStock(
-        @PathVariable("stock_code") Integer stockCode,
+        @PathVariable("stock_code") String stockCode,
         @RequestBody SellStockRequestDto dto
     ) {
         sellStockService.execute(stockCode, dto);
@@ -52,7 +52,7 @@ public class StockController {
 
     @PostMapping("/sell/{stock_code}")
     public ResponseEntity<Void> sellReservationStock(
-        @PathVariable("stock_code") Integer stockCode,
+        @PathVariable("stock_code") String stockCode,
         @RequestBody SellReservRequestDto dto
     ) {
         sellReservationStockService.execute(stockCode, dto);
@@ -61,7 +61,7 @@ public class StockController {
 
     @PostMapping("/buy/{stock_code}")
     public ResponseEntity<Void> buyReservationStock(
-        @PathVariable("stock_code") Integer stockCode,
+        @PathVariable("stock_code") String stockCode,
         @RequestBody BuyReservRequestDto dto
     ) {
         buyReservationStockService.execute(stockCode, dto);
@@ -69,7 +69,7 @@ public class StockController {
     }
 
     @GetMapping("/{stock_code}")
-    public ResponseEntity<GetInfoStockResponseDto> getInfoStock(@PathVariable("stock_code") Integer stockCode) {
+    public ResponseEntity<GetInfoStockResponseDto> getInfoStock(@PathVariable("stock_code") String stockCode) {
         GetInfoStockResponseDto response = getInfoStockService.execute(stockCode);
         return ResponseEntity.ok(response);
     }

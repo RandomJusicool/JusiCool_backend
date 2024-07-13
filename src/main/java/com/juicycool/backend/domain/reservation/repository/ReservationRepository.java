@@ -10,7 +10,6 @@ import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     List<Reservation> findByUser(User user);
-//    Optional<Reservation> findByUserAndStockCode(User user, Integer stockCode);
-    Boolean existsByUserAndStockCode(User user, Integer stockCode);
-    Optional<Reservation> findByUserAndStockCodeAndStatus(User user, Integer stockCode, Status status);
+    Boolean existsByUserAndStockCode(User user, String stockCode);
+    Optional<Reservation> findByUserAndStockCodeAndStatus(User user, String stockCode, Status status);
 }

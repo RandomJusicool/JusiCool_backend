@@ -14,10 +14,6 @@ public class ClearDayService {
     private final DayRepository dayRepository;
 
     public void execute() {
-        List<Day> days = dayRepository.findAll();
-
-        for (Day day : days) {
-            dayRepository.delete(day);
-        }
+        dayRepository.deleteAll();
     }
 }
