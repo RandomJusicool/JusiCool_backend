@@ -35,7 +35,7 @@ public class ProcessingReservationServiceImpl implements ProcessingReservationSe
 
         for (Reservation reservation : allReservation) {
             Stock findReservationStock = allStocks.stream()
-                    .filter(stock -> stock.getId().equals(reservation.getStock().getId()))
+                    .filter(stock -> stock.getCode().equals(reservation.getStock().getCode()))
                     .findFirst()
                     .orElseThrow(NotFoundStockException::new);
 

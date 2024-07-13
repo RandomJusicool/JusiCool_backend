@@ -11,7 +11,7 @@ public class StockConverterImpl implements StockConverter {
 
     public GetListStockResponseDto toListDto(Stock stock) {
         return GetListStockResponseDto.builder()
-                .id(stock.getId())
+                .code(stock.getCode())
                 .name(stock.getName())
                 .presentPrice(stock.getPresentPrice())
                 .upDownPercent((Math.floor(((double)(stock.getPresentPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100 * 10) / 10.0))
