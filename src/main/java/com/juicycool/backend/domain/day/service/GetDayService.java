@@ -5,5 +5,5 @@ import com.juicycool.backend.domain.day.presentation.dto.response.GetDayResponse
 import java.util.List;
 
 public interface GetDayService {
-    List<GetDayResponseDto> execute(Integer stockCode);
+    List<GetDayResponseDto> execute(String stockCode);
 }

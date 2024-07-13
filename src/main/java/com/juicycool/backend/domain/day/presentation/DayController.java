@@ -19,7 +19,7 @@ public class DayController {
     private final GetDayService getDayService;
 
     @GetMapping("/{stock_code}")
-    public ResponseEntity<List<GetDayResponseDto>> getDay(@PathVariable("stock_code") Integer stockCode) {
+    public ResponseEntity<List<GetDayResponseDto>> getDay(@PathVariable("stock_code") String stockCode) {
         List<GetDayResponseDto> response = getDayService.execute(stockCode);
         return ResponseEntity.ok(response);
     }

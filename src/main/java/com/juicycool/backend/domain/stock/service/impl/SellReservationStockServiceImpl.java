@@ -27,7 +27,7 @@ public class SellReservationStockServiceImpl implements SellReservationStockServ
     private final OwnedStocksRepository ownedStocksRepository;
     private final UserUtil userUtil;
 
-    public void execute(Integer stockCode, SellReservRequestDto dto) {
+    public void execute(String stockCode, SellReservRequestDto dto) {
         User user = userUtil.getCurrentUser();
 
         Stock stock = stockRepository.findById(stockCode)

@@ -16,7 +16,7 @@ public class GetInfoStockServiceImpl implements GetInfoStockService {
     private final StockRepository stockRepository;
     private final StockConverter stockConverter;
 
-    public GetInfoStockResponseDto execute(Integer stockCode) {
+    public GetInfoStockResponseDto execute(String stockCode) {
         Stock stock = stockRepository.findById(stockCode)
                 .orElseThrow(NotFoundStockException::new);
 

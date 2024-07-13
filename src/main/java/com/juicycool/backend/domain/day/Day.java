@@ -22,7 +22,7 @@ public class Day {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer code; // 주식 코드
+    private String code; // 주식 코드
 
     private Long marketPrice; // 시가
 

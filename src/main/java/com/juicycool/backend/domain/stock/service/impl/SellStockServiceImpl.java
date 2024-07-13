@@ -26,7 +26,7 @@ public class SellStockServiceImpl implements SellStockService {
     private final UserUtil userUtil;
     private final ReceiptRepository receiptRepository;
 
-    public void execute(Integer stockCode, SellStockRequestDto dto) {
+    public void execute(String stockCode, SellStockRequestDto dto) {
         User user = userUtil.getCurrentUser();
 
         Stock stock = stockRepository.findById(stockCode)
