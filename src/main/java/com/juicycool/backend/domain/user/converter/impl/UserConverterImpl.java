@@ -5,6 +5,7 @@ import com.juicycool.backend.domain.stock.OwnedStocks;
 import com.juicycool.backend.domain.user.converter.UserConverter;
 import com.juicycool.backend.domain.user.presentation.dto.response.GetMyBoardResponseDto;
 import com.juicycool.backend.domain.user.presentation.dto.response.GetMyOwnedStockResponseDto;
+import com.juicycool.backend.domain.user.presentation.dto.response.GetMyPointResponseDto;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,6 +24,14 @@ public class UserConverterImpl implements UserConverter {
     public GetMyBoardResponseDto toBoardDto(Board board) {
         return GetMyBoardResponseDto.builder()
                 .id(board.getId())
+                .build();
+    }
+
+    public GetMyPointResponseDto toPointDto(Long allPoint, Long price, Double percent) {
+        return GetMyPointResponseDto.builder()
+                .points(allPoint)
+                .upDownPrice(price)
+                .upDownPercent(percent)
                 .build();
     }
 
