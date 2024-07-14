@@ -100,6 +100,7 @@ public class SecurityConfig {
 
                                 // user
                                 .requestMatchers(HttpMethod.GET, "/api/v1/user").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/v1/user/board").authenticated()
 
                                 // day
                                 .requestMatchers(HttpMethod.GET, "/api/v1/day/{stock_code}").authenticated()
