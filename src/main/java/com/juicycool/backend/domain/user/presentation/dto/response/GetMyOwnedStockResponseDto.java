@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class GetMyOwnedStockResponseDto {
+    private String code;
     private String stock_name;
     private Long stock_num;
     private Long points;
