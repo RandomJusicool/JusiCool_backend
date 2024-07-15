@@ -39,7 +39,7 @@ public class ProcessingReservationServiceImpl implements ProcessingReservationSe
                     .findFirst()
                     .orElseThrow(NotFoundStockException::new);
 
-            if (reservation.getReservationPrice() == findReservationStock.getPresentPrice()) {
+            if (reservation.getReservationPrice() <= findReservationStock.getPresentPrice()) {
                 if (reservation.getStatus() == Status.BUY) {
                     processBuyingStock(reservation, findReservationStock);
                 } else if (reservation.getStatus() == Status.SELL) {
