@@ -27,7 +27,7 @@ public class OwnedStocks {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "stock_id")
+    @JoinColumn(name = "stock_code")
     private Stock stock;
 
     public void discountStockNumber(Long num) {
