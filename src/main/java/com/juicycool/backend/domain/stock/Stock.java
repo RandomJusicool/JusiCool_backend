@@ -30,4 +30,6 @@ public class Stock {
     private Long transactionVolume; // 거래량
 
     private Long transactionPrice; // 거래 대금
+
+    private String storeAt;
 }
