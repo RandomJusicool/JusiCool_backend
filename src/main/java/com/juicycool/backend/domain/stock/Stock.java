@@ -14,7 +14,10 @@ import lombok.NoArgsConstructor;
 public class Stock {
 
     @Id
-    @Column(columnDefinition = "TEXT")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true)
     private String code; // 주식 코드
 
     private String name; // 주식 이름

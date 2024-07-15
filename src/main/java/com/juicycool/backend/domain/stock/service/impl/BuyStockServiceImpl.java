@@ -28,7 +28,7 @@ public class BuyStockServiceImpl implements BuyStockService {
     public void execute(String stockCode, BuyStockRequestDto dto) {
         User user = userUtil.getCurrentUser();
 
-        Stock stock = stockRepository.findById(stockCode)
+        Stock stock = stockRepository.findByCode(stockCode)
                 .orElseThrow(NotFoundStockException::new);
 
         Long allPoint = stock.getPresentPrice() * dto.getNum();

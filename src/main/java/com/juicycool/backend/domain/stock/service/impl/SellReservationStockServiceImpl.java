@@ -30,7 +30,7 @@ public class SellReservationStockServiceImpl implements SellReservationStockServ
     public void execute(String stockCode, SellReservRequestDto dto) {
         User user = userUtil.getCurrentUser();
 
-        Stock stock = stockRepository.findById(stockCode)
+        Stock stock = stockRepository.findByCode(stockCode)
                 .orElseThrow(NotFoundStockException::new);
 
         OwnedStocks ownedStocks = ownedStocksRepository.findByUserAndStock(user, stock)
