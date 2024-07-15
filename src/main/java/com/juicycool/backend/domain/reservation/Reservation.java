@@ -33,6 +33,7 @@ public class Reservation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "stock_id")
+    @Column(columnDefinition = "TEXT")
     private Stock stock;
 
     public void plusStockNum(Long num) {

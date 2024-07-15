@@ -28,6 +28,7 @@ public class OwnedStocks {
 
     @ManyToOne
     @JoinColumn(name = "stock_id")
+    @Column(columnDefinition = "TEXT")
     private Stock stock;
 
     public void discountStockNumber(Long num) {
