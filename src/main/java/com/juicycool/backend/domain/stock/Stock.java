@@ -31,5 +31,5 @@ public class Stock {
 
     private Long transactionPrice; // 거래 대금
 
-    private String storeAt;
+    private String storeTime;
 }
