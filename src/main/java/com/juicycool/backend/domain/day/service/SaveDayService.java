@@ -7,8 +7,8 @@ import com.juicycool.backend.domain.stock.repository.StockRepository;
 import com.juicycool.backend.global.annotation.TransactionService;
 import lombok.RequiredArgsConstructor;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @TransactionService
@@ -21,11 +21,6 @@ public class SaveDayService {
     public void saveDay() {
         List<Stock> stocks = stockRepository.findAll();
 
-        LocalDateTime now = LocalDateTime.now();
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd a HH:mm:ss");
-        String format = simpleDateFormat.format(now);
-
         for (Stock stock: stocks) {
             Day day = Day.builder()
                     .code(stock.getCode())
@@ -35,7 +30,7 @@ public class SaveDayService {
                     .lowPrice(stock.getLowPrice())
                     .volume(stock.getTransactionVolume())
                     .upDownPercent((Math.floor(((double)(stock.getPresentPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100 * 10) / 10.0))
-                    .storeAt(format)
+                    .storeAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd a HH:mm")))
                     .build();
 
             dayRepository.save(day);
