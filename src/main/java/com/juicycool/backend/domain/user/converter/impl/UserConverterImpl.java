@@ -13,6 +13,7 @@ public class UserConverterImpl implements UserConverter {
 
     public GetMyOwnedStockResponseDto toDto(OwnedStocks ownedStock) {
         return GetMyOwnedStockResponseDto.builder()
+                .code(ownedStock.getStock().getCode())
                 .stock_name(ownedStock.getStock().getName())
                 .stock_num(ownedStock.getStockNumber())
                 .points(ownedStock.getPoints() / ownedStock.getStockNumber())
