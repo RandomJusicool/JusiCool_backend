@@ -33,8 +33,11 @@ public class SellReservationStockServiceImpl implements SellReservationStockServ
         Stock stock = stockRepository.findByCode(stockCode)
                 .orElseThrow(NotFoundStockException::new);
 
-        OwnedStocks ownedStocks = ownedStocksRepository.findByUserAndStock(user, stock)
+        OwnedStocks ownedStocks = ownedStocksRepository.findByUserAndStockCode(user, stock.getCode())
                 .orElseThrow(NotFoundOwnedStockException::new);
+
+        if (dto.getNum() > 0)
+            throw new InvalidSellingNumberException();
 
         if (ownedStocks.getStockNumber() - dto.getNum() < 0)
             throw new PointLowerThanPresentPriceException();
@@ -45,14 +48,14 @@ public class SellReservationStockServiceImpl implements SellReservationStockServ
     private void saveReservation(Stock stock, SellReservRequestDto dto, User user) {
         Reservation reservation = reservationRepository.findByUserAndStockCodeAndStatus(user, stock.getCode(), Status.SELL)
                 .orElse(Reservation.builder()
-                        .stock(stock)
+                        .stockCode(stock.getCode())
                         .reservationPrice(dto.getGoal_price())
                         .status(Status.SELL)
                         .user(user)
                         .stockNum(0L)
                         .build());
 
-        OwnedStocks ownedStocks = ownedStocksRepository.findByUserAndStock(user, stock)
+        OwnedStocks ownedStocks = ownedStocksRepository.findByUserAndStockCode(user, stock.getCode())
                 .orElseThrow(NotFoundOwnedStockException::new);
 
         if (ownedStocks.getStockNumber() < reservation.getStockNum() + dto.getNum()) {

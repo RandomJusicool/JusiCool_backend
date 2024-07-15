@@ -5,6 +5,7 @@ import com.juicycool.backend.domain.receipt.repository.ReceiptRepository;
 import com.juicycool.backend.domain.reservation.Status;
 import com.juicycool.backend.domain.stock.OwnedStocks;
 import com.juicycool.backend.domain.stock.Stock;
+import com.juicycool.backend.domain.stock.exception.InvalidBuyingNumberException;
 import com.juicycool.backend.domain.stock.exception.NotFoundStockException;
 import com.juicycool.backend.domain.stock.exception.PointLowerThanPresentPriceException;
 import com.juicycool.backend.domain.stock.presentation.dto.request.BuyStockRequestDto;
@@ -31,6 +32,9 @@ public class BuyStockServiceImpl implements BuyStockService {
         Stock stock = stockRepository.findByCode(stockCode)
                 .orElseThrow(NotFoundStockException::new);
 
+        if (dto.getNum() > 0)
+            throw new InvalidBuyingNumberException();
+
         Long allPoint = stock.getPresentPrice() * dto.getNum();
 
         if (allPoint > user.getPoints())
@@ -42,12 +46,12 @@ public class BuyStockServiceImpl implements BuyStockService {
     }
 
     private void saveOwnedStock(Long number, User user, Stock stock) {
-        OwnedStocks ownedStock = ownedStocksRepository.findByUserAndStock(user, stock)
+        OwnedStocks ownedStock = ownedStocksRepository.findByUserAndStockCode(user, stock.getCode())
                 .orElse(OwnedStocks.builder()
                         .stockNumber(0L)
                         .points(0L)
                         .user(user)
-                        .stock(stock)
+                        .stockCode(stock.getCode())
                         .build());
 
         ownedStock.plusStockNum(number);

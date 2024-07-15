@@ -30,6 +30,9 @@ public class BuyReservationStockServiceImpl implements BuyReservationStockServic
         Stock stock = stockRepository.findByCode(stockCode)
                 .orElseThrow(NotFoundStockException::new);
 
+        if (dto.getNum() > 0)
+            throw new InvalidBuyingNumberException();
+
         if (user.getPoints() - (dto.getGoal_price() * dto.getNum()) < 0)
             throw new InvalidBuyingNumberException();
 
@@ -41,7 +44,7 @@ public class BuyReservationStockServiceImpl implements BuyReservationStockServic
     private void saveReservation(User user, BuyReservRequestDto dto, Stock stock) {
         Reservation reservation = reservationRepository.findByUserAndStockCodeAndStatus(user, stock.getCode(), Status.BUY)
                 .orElse(Reservation.builder()
-                        .stock(stock)
+                        .stockCode(stock.getCode())
                         .reservationPrice(dto.getGoal_price())
                         .status(Status.BUY)
                         .user(user)

@@ -33,7 +33,10 @@ public class GetMyPointServiceImpl implements GetMyPointService {
         Long myStockPrice = 0L; // 보유 중인 주식
 
         for (OwnedStocks ownedStock: ownedStocks) {
-            nowStockPrice += ownedStock.getStock().getPresentPrice() * ownedStock.getStockNumber();
+            Stock stock = stockRepository.findByCode(ownedStock.getStockCode())
+                    .orElseThrow(NotFoundStockException::new);
+
+            nowStockPrice += stock.getPresentPrice() * ownedStock.getStockNumber();
 
             myStockPrice += ownedStock.getPoints();
         }

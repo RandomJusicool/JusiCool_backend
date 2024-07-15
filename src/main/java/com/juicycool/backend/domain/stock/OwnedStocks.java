@@ -26,9 +26,7 @@ public class OwnedStocks {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "stock_id")
-    private Stock stock;
+    private String stockCode;
 
     public void discountStockNumber(Long num) {
         stockNumber -= num;
