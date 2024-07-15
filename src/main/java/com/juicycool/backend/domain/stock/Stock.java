@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class Stock {
 
     @Id
+    @Column(columnDefinition = "VARCHAR(255)")
     private String code; // 주식 코드
 
     private String name; // 주식 이름
