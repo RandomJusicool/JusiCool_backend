@@ -27,7 +27,7 @@ public class BuyReservationStockServiceImpl implements BuyReservationStockServic
     public void execute(String stockCode, BuyReservRequestDto dto) {
         User user = userUtil.getCurrentUser();
 
-        Stock stock = stockRepository.findById(stockCode)
+        Stock stock = stockRepository.findByCode(stockCode)
                 .orElseThrow(NotFoundStockException::new);
 
         if (user.getPoints() - (dto.getGoal_price() * dto.getNum()) < 0)

@@ -29,7 +29,7 @@ public class SellStockServiceImpl implements SellStockService {
     public void execute(String stockCode, SellStockRequestDto dto) {
         User user = userUtil.getCurrentUser();
 
-        Stock stock = stockRepository.findById(stockCode)
+        Stock stock = stockRepository.findByCode(stockCode)
                 .orElseThrow(NotFoundStockException::new);
 
         OwnedStocks ownedStocks = ownedStocksRepository.findByUserAndStock(user, stock)
