@@ -15,7 +15,7 @@ public class DayScheduler {
     private final SaveDayService saveDayService;
     private final ClearDayService clearDayService;
 
-    @Scheduled(cron = "0 */1 * * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 5-30/10 8-15 * * *", zone = "Asia/Seoul")
     public void saveDay() {
         log.info("--------------saveDay start--------------");
         saveDayService.saveDay();
