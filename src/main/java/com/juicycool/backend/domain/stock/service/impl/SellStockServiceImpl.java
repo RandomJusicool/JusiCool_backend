@@ -32,8 +32,11 @@ public class SellStockServiceImpl implements SellStockService {
         Stock stock = stockRepository.findByCode(stockCode)
                 .orElseThrow(NotFoundStockException::new);
 
-        OwnedStocks ownedStocks = ownedStocksRepository.findByUserAndStock(user, stock)
+        OwnedStocks ownedStocks = ownedStocksRepository.findByUserAndStockCode(user, stock.getCode())
                 .orElseThrow(NotFoundOwnedStockException::new);
+
+        if (dto.getNum() > 0)
+            throw new InvalidSellingNumberException();
 
         ownedStocks.discountStockNumber(dto.getNum());
         ownedStocks.minusPoints(stock.getPresentPrice() * dto.getNum());

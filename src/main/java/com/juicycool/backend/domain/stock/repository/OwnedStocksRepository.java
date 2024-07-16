@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OwnedStocksRepository extends JpaRepository<OwnedStocks, Long> {
-    Optional<OwnedStocks> findByUserAndStock(User user, Stock stock);
+    Optional<OwnedStocks> findByUserAndStockCode(User user, String stockCode);
     List<OwnedStocks> findByUser(User user);
 }
