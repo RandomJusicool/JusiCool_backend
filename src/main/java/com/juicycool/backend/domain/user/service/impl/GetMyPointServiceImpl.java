@@ -37,27 +37,19 @@ public class GetMyPointServiceImpl implements GetMyPointService {
                     .orElseThrow(NotFoundStockException::new);
 
             nowStockPrice += stock.getPresentPrice() * ownedStock.getStockNumber();
-
             myStockPrice += ownedStock.getPoints();
         }
 
-        if (nowStockPrice > myStockPrice) {
-            Long myPoints = user.getPoints() + nowStockPrice;
+        Long myPoints = user.getPoints() + nowStockPrice;
+        Long priceDifference = nowStockPrice - myStockPrice;
+        double percent;
 
-            Double percent = (Math.floor((double)(nowStockPrice - myStockPrice) / (double)(myPoints)) * 100);
-
-            return userConverter.toPointDto(myPoints, nowStockPrice - myStockPrice, percent);
-        } else if (nowStockPrice == myStockPrice) {
-            Long myPoints = user.getPoints() + nowStockPrice;
-
-            return userConverter.toPointDto(myPoints, 0L, 0D);
+        if (priceDifference != 0) {
+            percent = (double) priceDifference / (myStockPrice + user.getPoints()) * 100;
         } else {
-            Long myPoints = user.getPoints() + nowStockPrice;
-
-            Double percent = (Math.floor((double)(nowStockPrice - myStockPrice) / (double)(myPoints)) * 100);
-
-            return userConverter.toPointDto(myPoints, nowStockPrice - myStockPrice, percent);
+            percent = 0D;
         }
 
+        return userConverter.toPointDto(myPoints, priceDifference, percent);
     }
 }
