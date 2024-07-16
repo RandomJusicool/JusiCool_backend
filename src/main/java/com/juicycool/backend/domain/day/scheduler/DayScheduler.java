@@ -22,7 +22,7 @@ public class DayScheduler {
         log.info("--------------saveDay end--------------");
     }
 
-    @Scheduled(cron = "0 55 7 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "59 7 * * *", zone = "Asia/Seoul")
     public void clearDay() {
         log.info("--------------clearDay start--------------");
         clearDayService.execute();
