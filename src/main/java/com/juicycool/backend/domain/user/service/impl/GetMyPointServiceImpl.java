@@ -45,7 +45,7 @@ public class GetMyPointServiceImpl implements GetMyPointService {
         double percent;
 
         if (priceDifference != 0) {
-            percent = (double) priceDifference / (myStockPrice + user.getPoints()) * 100;
+            percent = Math.floor((double) priceDifference / (myStockPrice + user.getPoints()) * 100);
         } else {
             percent = 0D;
         }
