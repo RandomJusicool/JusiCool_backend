@@ -32,7 +32,7 @@ public class BuyStockServiceImpl implements BuyStockService {
         Stock stock = stockRepository.findByCode(stockCode)
                 .orElseThrow(NotFoundStockException::new);
 
-        if (dto.getNum() > 0)
+        if (dto.getNum() <= 0)
             throw new InvalidBuyingNumberException();
 
         Long allPoint = stock.getPresentPrice() * dto.getNum();

@@ -30,7 +30,7 @@ public class BuyReservationStockServiceImpl implements BuyReservationStockServic
         Stock stock = stockRepository.findByCode(stockCode)
                 .orElseThrow(NotFoundStockException::new);
 
-        if (dto.getNum() > 0)
+        if (dto.getNum() <= 0)
             throw new InvalidBuyingNumberException();
 
         if (user.getPoints() - (dto.getGoal_price() * dto.getNum()) < 0)
