@@ -29,7 +29,7 @@ public class UserConverterImpl implements UserConverter {
                 .stock_name(stock.getName())
                 .stock_num(ownedStock.getStockNumber())
                 .points(stock.getPresentPrice() * ownedStock.getStockNumber())
-                .upDownPercent(Math.floor((double) (priceDifference / ownedStock.getPoints()) * 100))
+                .upDownPercent(Math.floor(((double)priceDifference / ownedStock.getPoints()) * 100))
                 .upDownPoints(stock.getPresentPrice() - (ownedStock.getPoints() / ownedStock.getStockNumber()))
                 .build();
     }
