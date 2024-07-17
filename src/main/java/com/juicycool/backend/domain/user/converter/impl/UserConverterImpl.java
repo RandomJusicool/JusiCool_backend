@@ -22,13 +22,15 @@ public class UserConverterImpl implements UserConverter {
         Stock stock = stockRepository.findByCode(ownedStock.getStockCode())
                 .orElseThrow(NotFoundStockException::new);
 
+        Long priceDifference = (stock.getPresentPrice() * ownedStock.getStockNumber()) - ownedStock.getPoints();
+
         return GetMyOwnedStockResponseDto.builder()
                 .code(stock.getCode())
                 .stock_name(stock.getName())
                 .stock_num(ownedStock.getStockNumber())
-                .points(ownedStock.getPoints() / ownedStock.getStockNumber())
-                .upDownPercent((Math.floor(((double)(stock.getPresentPrice() - stock.getMarketPrice()) / stock.getMarketPrice()) * 100 * 10) / 10.0))
-                .upDownPoints(stock.getPresentPrice() - stock.getMarketPrice())
+                .points(stock.getPresentPrice() * ownedStock.getStockNumber())
+                .upDownPercent(Math.floor((double) (priceDifference / ownedStock.getPoints()) * 100))
+                .upDownPoints(stock.getPresentPrice() - (ownedStock.getPoints() / ownedStock.getStockNumber()))
                 .build();
     }
 
