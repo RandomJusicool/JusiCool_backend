@@ -1,5 +1,6 @@
 package com.juicycool.backend.domain.auth.service.impl;
 
+import com.juicycool.backend.domain.auth.event.SignUpLoggingEvent;
 import com.juicycool.backend.domain.auth.exception.DuplicateEmailException;
 import com.juicycool.backend.domain.auth.exception.NotVerificationMailException;
 import com.juicycool.backend.domain.auth.presentation.dto.request.SignUpRequestDto;
@@ -11,6 +12,7 @@ import com.juicycool.backend.domain.user.User;
 import com.juicycool.backend.domain.user.repository.UserRepository;
 import com.juicycool.backend.global.annotation.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @TransactionService
@@ -20,6 +22,7 @@ public class SignUpServiceImpl implements SignUpService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final MailAuthRepository mailAuthRepository;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public void execute(SignUpRequestDto dto) {
         if (userRepository.existsByEmail(dto.getEmail())) {
@@ -45,5 +48,6 @@ public class SignUpServiceImpl implements SignUpService {
 
         userRepository.save(user);
 
+        applicationEventPublisher.publishEvent(new SignUpLoggingEvent(user.getEmail(), user.getName()));
     }
 }
