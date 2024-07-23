@@ -38,3 +38,6 @@ spring:
 jwt:
   accessSecret: ${JWT_ACCESS_SECRET}
   refreshSecret: ${JWT_REFRESH_SECRET}
+
+discord:
+  sign-up-url: ${DISCORD_SIGN_UP_URL}
