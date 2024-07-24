@@ -35,11 +35,11 @@ public class ErrorEventHandler {
         statusField.add("value", new JsonPrimitive(errorLoggingEvent.getResponse().getStatus()));
 
         JsonObject contentTypeField = new JsonObject();
-        contentTypeField.add("name", new JsonPrimitive("이름"));
+        contentTypeField.add("name", new JsonPrimitive("CONTENT-TYPE"));
         contentTypeField.add("value", new JsonPrimitive(MediaType.APPLICATION_JSON_VALUE));
 
         JsonObject writerField = new JsonObject();
-        writerField.add("name", new JsonPrimitive("에러"));
+        writerField.add("name", new JsonPrimitive("Exception"));
         writerField.add("value", new JsonPrimitive(responseString));
 
         JsonArray fields = new JsonArray();
