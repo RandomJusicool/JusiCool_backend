@@ -28,11 +28,8 @@ public class ExceptionFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } catch (GlobalException e) {
             sendError(response, e.getErrorCode());
-            applicationEventPublisher.publishEvent(new ErrorLoggingEvent(response, e.getErrorCode()));
         } catch (Exception e) {
             sendError(response, ErrorCode.INTERNAL_SERVER_ERROR);
-            applicationEventPublisher.publishEvent(new ErrorLoggingEvent(response, ErrorCode.INTERNAL_SERVER_ERROR));
-            throw e;
         }
     }
 
@@ -43,5 +40,7 @@ public class ExceptionFilter extends OncePerRequestFilter {
         response.setStatus(errorCode.getStatus());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.getWriter().write(responseString);
+
+        applicationEventPublisher.publishEvent(new ErrorLoggingEvent(response, errorCode));
     }
 }
