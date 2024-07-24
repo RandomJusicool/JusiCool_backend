@@ -5,31 +5,33 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.juicycool.backend.global.exception.ErrorCode;
 import com.juicycool.backend.global.exception.ErrorResponse;
 import com.juicycool.backend.global.exception.GlobalException;
+import com.juicycool.backend.global.filter.event.ErrorLoggingEvent;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.MediaType;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+@AllArgsConstructor
 public class ExceptionFilter extends OncePerRequestFilter {
 
     private final ObjectMapper objectMapper;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
-    public ExceptionFilter(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
-
-    @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         try {
             filterChain.doFilter(request, response);
         } catch (GlobalException e) {
             sendError(response, e.getErrorCode());
+            applicationEventPublisher.publishEvent(new ErrorLoggingEvent(response, e.getErrorCode()));
         } catch (Exception e) {
             sendError(response, ErrorCode.INTERNAL_SERVER_ERROR);
+            applicationEventPublisher.publishEvent(new ErrorLoggingEvent(response, ErrorCode.INTERNAL_SERVER_ERROR));
             throw e;
         }
     }
