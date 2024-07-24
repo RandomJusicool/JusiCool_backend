@@ -6,23 +6,22 @@ import com.google.gson.JsonPrimitive;
 import com.juicycool.backend.domain.auth.event.SignUpLoggingEvent;
 import com.juicycool.backend.global.thirdparty.discord.properties.DiscordProperties;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 import org.springframework.web.client.RestTemplate;
 
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
-public class DiscordUtil {
+public class SignUpEventHandler {
 
     private final DiscordProperties discordProperties;
 
-    @EventListener
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void signupLoggingHandler(SignUpLoggingEvent signupLoggingEvent) {
         JsonObject emailField = new JsonObject();
         emailField.add("name", new JsonPrimitive("이메일"));
@@ -43,6 +42,7 @@ public class DiscordUtil {
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("content", new JsonPrimitive("## 회원가입 알림"));
+
         JsonArray embeds = new JsonArray();
         embeds.add(embed);
         jsonObject.add("embeds", embeds);
@@ -52,7 +52,6 @@ public class DiscordUtil {
 
         RestTemplate restTemplate = new RestTemplate();
         HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
-        log.info(discordProperties.getSignUpURL());
         restTemplate.postForObject(discordProperties.getSignUpURL(), entity, String.class);
     }
 }
