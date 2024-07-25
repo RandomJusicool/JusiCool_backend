@@ -28,11 +28,10 @@ public class ErrorEventHandler {
     public void exceptionLoggingHandler(ErrorLoggingEvent errorLoggingEvent) throws IOException {
         ErrorResponse errorResponse = new ErrorResponse(errorLoggingEvent.getErrorCode().getStatus(), errorLoggingEvent.getErrorCode().getMessage());
         String responseString = objectMapper.writeValueAsString(errorResponse);
-        errorLoggingEvent.getResponse().getWriter().write(responseString);
 
         JsonObject statusField = new JsonObject();
         statusField.add("name", new JsonPrimitive("상태코드"));
-        statusField.add("value", new JsonPrimitive(errorLoggingEvent.getResponse().getStatus()));
+        statusField.add("value", new JsonPrimitive(errorLoggingEvent.getErrorCode().getStatus()));
 
         JsonObject contentTypeField = new JsonObject();
         contentTypeField.add("name", new JsonPrimitive("CONTENT-TYPE"));
