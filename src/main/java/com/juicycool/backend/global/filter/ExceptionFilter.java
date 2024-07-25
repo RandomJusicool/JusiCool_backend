@@ -30,6 +30,7 @@ public class ExceptionFilter extends OncePerRequestFilter {
             sendError(response, e.getErrorCode());
         } catch (Exception e) {
             sendError(response, ErrorCode.INTERNAL_SERVER_ERROR);
+            throw e;
         }
     }
 
@@ -41,6 +42,6 @@ public class ExceptionFilter extends OncePerRequestFilter {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.getWriter().write(responseString);
 
-        applicationEventPublisher.publishEvent(new ErrorLoggingEvent(response, errorCode));
+        applicationEventPublisher.publishEvent(new ErrorLoggingEvent(errorCode));
     }
 }
