@@ -8,6 +8,7 @@ import com.juicycool.backend.global.security.handler.JwtAccessDeniedHandler;
 import com.juicycool.backend.global.security.handler.JwtAuthenticationEntryPoint;
 import com.juicycool.backend.global.security.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -29,6 +30,7 @@ public class SecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final ObjectMapper objectMapper;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -110,7 +112,7 @@ public class SecurityConfig {
                 )
 
                 .addFilterBefore(new RequestLogFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new ExceptionFilter(objectMapper), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new ExceptionFilter(objectMapper, applicationEventPublisher), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
 
 
