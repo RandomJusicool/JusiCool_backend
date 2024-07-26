@@ -40,15 +40,20 @@ public class GetMyPointServiceImpl implements GetMyPointService {
             myStockPrice += ownedStock.getPoints();
         }
 
+        myStockPrice += user.getPoints();
+
         Long myPoints = user.getPoints() + nowStockPrice;
         Long priceDifference = nowStockPrice - myStockPrice;
+
         double percent;
 
         if (priceDifference != 0) {
-            percent = Math.floor((double) priceDifference / (myStockPrice + user.getPoints()) * 100);
+            percent = (double) priceDifference / myStockPrice * 100;
         } else {
             percent = 0D;
         }
+
+        percent = Math.floor(percent);
 
         return userConverter.toPointDto(myPoints, priceDifference, percent);
     }
