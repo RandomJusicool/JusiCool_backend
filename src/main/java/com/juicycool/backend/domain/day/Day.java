@@ -1,9 +1,6 @@
 package com.juicycool.backend.domain.day;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,19 +19,27 @@ public class Day {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String code; // 주식 코드
 
+    @Column(nullable = false)
     private Long marketPrice; // 시가
 
+    @Column(nullable = false)
     private Long highPrice; // 고가
 
+    @Column(nullable = false)
     private Long lowPrice; // 저가
 
+    @Column(nullable = false)
     private Long presentPrice; // 현재가
 
+    @Column(nullable = false)
     private Long volume; // 거래량
 
+    @Column(nullable = false)
     private Double upDownPercent; // 등략률
 
+    @Column(nullable = false)
     private String storeAt; // 저장된 시간
 }
