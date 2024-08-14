@@ -19,11 +19,14 @@ public class Receipt {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String stockName;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Status status;
 
+    @Column(nullable = false)
     private Long price;
 
     @ManyToOne

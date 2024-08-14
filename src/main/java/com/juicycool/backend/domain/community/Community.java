@@ -17,8 +17,10 @@ public class Community {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 30)
     private String name;
 
+    @Column(nullable = false)
     private Integer boardNum;
 
     public void plusBoardNum() {boardNum += 1;}
