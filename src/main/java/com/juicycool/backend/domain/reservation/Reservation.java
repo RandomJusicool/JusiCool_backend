@@ -27,7 +27,7 @@ public class Reservation {
     private Long stockNum; // 예약한 주식 갯수
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10)
     private Status status;
 
     @ManyToOne(fetch = FetchType.LAZY)
