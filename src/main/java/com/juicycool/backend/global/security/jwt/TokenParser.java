@@ -1,11 +1,15 @@
 package com.juicycool.backend.global.security.jwt;
 
+import com.juicycool.backend.global.auth.AuthDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -21,6 +25,7 @@ import static com.juicycool.backend.global.filter.JwtFilter.BEARER_PREFIX;
 public class TokenParser {
 
     private static final String BEARER_TYPE = "Bearer ";
+    private final AuthDetailsService authDetailsService;
     private final JwtProperties jwtProperties;
 
     private Key getSignInAccessKey() {
@@ -33,6 +38,13 @@ public class TokenParser {
         } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
+    }
+
+    public Authentication getAuthentication(String accessToken) {
+        Claims claims = parseClaims(accessToken);
+
+        UserDetails principal = authDetailsService.loadUserByUsername(claims.getSubject());
+        return new UsernamePasswordAuthenticationToken(principal, "", principal.getAuthorities());
     }
 
     public String resolveToken(HttpServletRequest request) {
