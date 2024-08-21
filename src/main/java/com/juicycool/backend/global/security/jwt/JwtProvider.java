@@ -62,16 +62,6 @@ public class JwtProvider {
         }
     }
 
-    public Authentication getAuthentication(String accessToken) {
-        Claims claims = tokenParser.parseClaims(accessToken);
-
-        if (claims.get(AUTHORITIES_KEY) == null) {
-            throw new GlobalException(ErrorCode.INVALID_TOKEN);
-        }
-        UserDetails principal = authDetailsService.loadUserByUsername(claims.getSubject());
-        return new UsernamePasswordAuthenticationToken(principal, "", principal.getAuthorities());
-    }
-
     public String generateAccessToken(String email) {
         Date accessTokenExpiresIn = new Date(System.currentTimeMillis() + ACCESS_TOKEN_TIME*1000);
 
