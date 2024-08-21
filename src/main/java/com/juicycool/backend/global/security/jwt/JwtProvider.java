@@ -11,28 +11,22 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import static com.juicycool.backend.global.filter.JwtFilter.AUTHORIZATION_HEADER;
-import static com.juicycool.backend.global.filter.JwtFilter.BEARER_PREFIX;
-
 
 @Component
 @RequiredArgsConstructor
 public class JwtProvider {
     private static final String AUTHORITIES_KEY = "auth";
-    private static final String BEARER_TYPE = "Bearer ";
     private static final long ACCESS_TOKEN_TIME = 60L * 15 * 4;
     public static final long REFRESH_TOKEN_TIME = 60L * 60 * 24 * 7;
 
@@ -66,24 +60,6 @@ public class JwtProvider {
         } catch (Exception e) {
             throw new InvalidTokenException();
         }
-    }
-
-    public Authentication getAuthentication(String accessToken) {
-        Claims claims = tokenParser.parseClaims(accessToken);
-
-        if (claims.get(AUTHORITIES_KEY) == null) {
-            throw new GlobalException(ErrorCode.INVALID_TOKEN);
-        }
-        UserDetails principal = authDetailsService.loadUserByUsername(claims.getSubject());
-        return new UsernamePasswordAuthenticationToken(principal, "", principal.getAuthorities());
-    }
-
-    public String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
-            return bearerToken.substring(7);
-        }
-        return null;
     }
 
     public String generateAccessToken(String email) {
