@@ -1,4 +1,4 @@
-package com.juicycool.backend.stock.service.impl;
+package com.juicycool.backend.stock;
 
 import com.juicycool.backend.domain.receipt.Receipt;
 import com.juicycool.backend.domain.receipt.repository.ReceiptRepository;
