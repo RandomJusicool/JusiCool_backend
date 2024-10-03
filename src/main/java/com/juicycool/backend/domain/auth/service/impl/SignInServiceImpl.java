@@ -27,7 +27,7 @@ public class SignInServiceImpl implements SignInService {
         User user = userRepository.findByEmail(dto.getEmail())
                 .orElseThrow(NotFoundUserException::new);
 
-        if (passwordEncoder.matches(user.getPassword(), dto.getPassword()))
+        if (!passwordEncoder.matches(dto.getPassword(), user.getPassword()))
             throw new NotMatchPasswordException();
 
         TokenResponse tokenResponse = jwtProvider.generateTokenDto(user.getEmail());
