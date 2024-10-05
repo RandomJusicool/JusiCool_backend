@@ -1,10 +1,10 @@
 package com.juicycool.backend.domain.stock.presentation.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@AllArgsConstructor
 public class SellReservRequestDto {
     private Long num;
     private Long goal_price;
