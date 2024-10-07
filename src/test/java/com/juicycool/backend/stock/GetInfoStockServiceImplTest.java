@@ -3,6 +3,8 @@ package com.juicycool.backend.stock;
 import com.juicycool.backend.domain.stock.Stock;
 import com.juicycool.backend.domain.stock.converter.StockConverter;
 import com.juicycool.backend.domain.stock.exception.NotFoundStockException;
+import com.juicycool.backend.domain.stock.presentation.dto.response.GetInfoStockResponseDto;
+import com.juicycool.backend.domain.stock.presentation.dto.response.GetListStockResponseDto;
 import com.juicycool.backend.domain.stock.repository.StockRepository;
 import com.juicycool.backend.domain.stock.service.impl.GetInfoStockServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -33,11 +36,6 @@ public class GetInfoStockServiceImplTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-
-        stock = Stock.builder()
-                .code("1111")
-                .presentPrice(11111L)
-                .build();
     }
 
     @Test
@@ -51,10 +49,19 @@ public class GetInfoStockServiceImplTest {
     @Test
     @DisplayName("만약 정상적으로 주식의 정보를 가져온 경우")
     void If_info_of_stock_normally_imported() {
+        Stock stock = Stock.builder().build();
+
         when(stockRepository.findByCode(anyString())).thenReturn(Optional.of(stock));
 
-        getInfoStockService.execute(anyString());
+        GetInfoStockResponseDto responseDto = GetInfoStockResponseDto.builder().build();
 
+        when(stockRepository.findByCode(anyString())).thenReturn(Optional.of(stock));
+        when(stockConverter.toInfoDto(stock)).thenReturn(responseDto);
+
+        GetInfoStockResponseDto stockDto = getInfoStockService.execute(anyString());
+
+        assertEquals(responseDto, stockDto);
         verify(stockRepository, times(1)).findByCode(anyString());
+        verify(stockConverter, times(1)).toInfoDto(stock);
     }
 }
